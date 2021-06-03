@@ -5,11 +5,12 @@ function Search() {
     const [text, setText] = useState('');
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#4A5156' }}>
             <TextInput
                 style={styles.input}
                 value={text}
                 placeholder={'Harry Potter, Lord of the Rings...'}
+                placeholderTextColor="#CEDAD9"
                 onChangeText={(text) => setText(text)}
             />
 
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         width: 280,
+        color: '#E2EAE9',
     },
     button: {
         backgroundColor: "#5865F2",

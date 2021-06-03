@@ -33,8 +33,13 @@ export default function App() {
                 },
               })}
               tabBarOptions={{
-                activeTintColor: 'blue',
-                inactiveTintColor: 'gray',
+                activeTintColor: 'white',
+                inactiveTintColor: '#A5AAAE',
+                keyboardHidesTabBar: true,
+                style: {
+                  backgroundColor: '#4A5156',
+                  borderTopColor:'#111112',
+                },
               }}
       >
         <Tab.Screen name="Home" component={Home} />
@@ -42,6 +47,7 @@ export default function App() {
         <Tab.Screen name="Profile" component={Profile} />
         <Tab.Screen name="Login" component={Login} />
       </Tab.Navigator>
+      <StatusBar style="light" backgroundColor="#393E41"/>
     </NavigationContainer>
   );
 }
