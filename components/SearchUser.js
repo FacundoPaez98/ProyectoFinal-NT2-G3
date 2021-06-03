@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-function Search() {
+function SearchUser() {
     const [text, setText] = useState('');
 
     return (
@@ -9,7 +9,7 @@ function Search() {
             <TextInput
                 style={styles.input}
                 value={text}
-                placeholder={'Harry Potter, Lord of the Rings...'}
+                placeholder={'Nombre usuario'}
                 onChangeText={(text) => setText(text)}
             />
 
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Search;
+export default SearchUser;

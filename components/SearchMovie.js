@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
-function Search() {
+function SearchMovie() {
     const [text, setText] = useState('');
 
     return (
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Search;
+export default SearchMovie;
