@@ -1,22 +1,34 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, StatusBar } from 'react-native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { AntDesign } from "@expo/vector-icons";
+import SearchUser from "./SearchUser"
+import SearchMovie from "./SearchMovie"
+
+const Tab = createMaterialTopTabNavigator();
 
 function Search() {
-    const [text, setText] = useState('');
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <TextInput
-                style={styles.input}
-                value={text}
-                placeholder={'Harry Potter, Lord of the Rings...'}
-                onChangeText={(text) => setText(text)}
-            />
+        <Tab.Navigator
+            initialRouteName="SearchMovie"
+            tabBarOptions={{
+                activeTintColor: 'white',
+                inactiveTintColor: '#A5AAAE',
+                keyboardHidesTabBar: true,
+                style: {
+                    padding: 10,
+                    backgroundColor: '#4A5156',
+                    borderTopColor: '#111112',
+                },
+            }}>
 
-            <TouchableOpacity onPress={() => alert('Buscando...')} style={styles.button}>
-                <Text style={styles.buttonText}>Buscar</Text>
-            </TouchableOpacity>
-        </View>
+            <Tab.Screen name="Usuario" component={SearchUser} />
+            <Tab.Screen name="Pelicula" component={SearchMovie} />
+
+        </Tab.Navigator>
+
     );
 }
 
@@ -28,6 +40,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         width: 280,
+        color: '#E2EAE9',
     },
     button: {
         backgroundColor: "#5865F2",

@@ -12,7 +12,7 @@ function Login() {
       }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#4A5156' }}>
             {
                 (showForm) ?
                     <SignUp volverDeRegistro={volverDeRegistro}/>
@@ -33,7 +33,7 @@ function Login() {
                             onChangeText={(text) => setPassword(text)}
                         />
 
-                        <Text style={{ color: 'blue', marginBottom: 20, position: 'relative', right: 100 }}
+                        <Text style={{ color: '#00B0F4', marginBottom: 20, position: 'relative', right: 100 }}
                             onPress={()=>{setFlag(true)}}>
                             Registrate Aqui
                         </Text>
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         minWidth: 300,
+        color: '#E2EAE9',
     },
     button: {
         backgroundColor: "#5865F2",
@@ -69,10 +70,12 @@ const styles = StyleSheet.create({
     text1: {
         position: 'relative',
         right: 90,
+        color: '#E2EAE9',
     },
     text2: {
         position: 'relative',
         right: 110,
+        color: '#E2EAE9',
     }
 });
 
