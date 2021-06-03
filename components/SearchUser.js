@@ -5,7 +5,7 @@ function SearchUser() {
     const [text, setText] = useState('');
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' , backgroundColor: '#4A5156' }}>
             <TextInput
                 style={styles.input}
                 value={text}
