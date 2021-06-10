@@ -7,7 +7,7 @@ import ScrollViewMovies from './ScrollViewMovies';
 
 
 export default function Profile() {
-    const [tabView, setTabView] = useState("");
+    const [tabView, setTabView] = useState("Peliculas");
 
     function showData(value) {
         if (value === "Peliculas") {
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     dataView: {
         flexGrow: 0,
         marginTop: '18%',
-        marginBottom: '55%'
+        marginBottom: '125%'
     },
     row: {
         flexDirection: "row",

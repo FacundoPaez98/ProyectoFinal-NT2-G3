@@ -1,48 +1,126 @@
-import React from 'react';
-import { StyleSheet, Text, View  } from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-export default function infoProfile(){
-    return (
-            <View >
-                <Text style={styles.userName}>TestUsername </Text>
-                <View>
-                    <Text style={styles.followingCount}>100
-                        <Text style={styles.TextFollow}>Seguidos</Text>
-                    </Text>
-                    <Text style={styles.followersCount}>85
-                        <Text style={styles.TextFollow}>Seguidores</Text>
-                    </Text>
-                </View>
-            </View >
-            );
+
+export default function infoProfile() {
+
+    const [follow, setFollow] = useState("Seguir");
+
+    function changeFollowButtom() {
+        if (follow == "Seguir") {
+            setFollow("Siguiendo")
+        } else {
+            setFollow("Seguir")
+        }
+    }
+    function isFollowing(value) {
+        if (value) {
+            setFollow("Siguiendo");
+        } else {
+            setFollow("Seguir");
+        }
     }
 
+    return (
+        <View >
+
+            <Text style={styles.userName}>TestUsername </Text>
+
+            <View style={styles.row}>
+                <PreviewLayout
+                    value={follow}
+                    selectedValue={follow}
+                    setSelectedValue={changeFollowButtom}
+                ></PreviewLayout>
+
+                <View style={styles.columm}>
+                    <Text style={styles.followingCount}>100 </Text>
+                    <Text style={styles.TextFollow}> Seguidos</Text>
+                    <Text style={styles.followingCount}>85 </Text>
+                    <Text style={styles.TextFollow}> Seguidores</Text>
+
+                </View>
+            </View>
+        </View >
+    );
+}
+
+const PreviewLayout = ({
+    value,
+    selectedValue,
+    setSelectedValue,
+
+}) => (
+    <View style={{ padding: 10, flex: 1 }}>
+        <View>
+            <TouchableOpacity
+                key={value}
+                onPress={() => { setSelectedValue() }}
+                style={[
+                    styles.button,
+                    selectedValue === value && styles.selected,
+                ]}
+            >
+                <Text
+                    style={[
+                        styles.followButton,
+                        selectedValue === value && styles.selectedLabel,
+                    ]}
+                >
+                    {value}
+                </Text>
+            </TouchableOpacity>
+
+        </View>
+    </View>
+)
 
 const styles = StyleSheet.create({
+    row: {
+        flexDirection: 'row',
+        flexWrap: "wrap",
+    },
+    columm: {
+        flexDirection: "column",
+        flexWrap: "wrap",
+    },
     userName: {
-        paddingTop: 25,
-        textAlign: 'center',
+        marginTop: '10%',
+        textAlign: 'left',
+        marginLeft: 20,
         fontSize: 18,
         color: "white",
         fontWeight: "bold"
     },
     followingCount: {
+        paddingHorizontal: "13%",
+        textAlign: "center",
         color: "white",
-        left: 10,
+        paddingTop: 10,
         fontWeight: "bold"
     },
     TextFollow: {
-        paddingLeft: 5,
-        marginLeft: 5,
+        textAlign: "center",
         color: "rgb(136, 153, 166)",
         fontWeight: "300"
     },
-    followersCount: {
-        color: "white",
-        position: 'absolute',
-        marginLeft: 5,
-        right: 30,
-        fontWeight: "bold"
+
+    button: {
+        width: 100,
+        height: 100,
+        borderRadius: 100,
+        alignSelf: 'flex-start',
+        justifyContent: 'center',
+        textAlign: "center",
     },
+    selected: {
+        backgroundColor: "#00406e",
+    },
+    selectedLabel: { // Color del texto
+        color: "white",
+        textAlign: "center",
+    },
+
 });
