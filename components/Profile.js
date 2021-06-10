@@ -20,7 +20,7 @@ export default function Profile() {
     }
 
     return (
-        <View>
+        <View style={{backgroundColor:'#4A5156'}}>
             <InfoProfile />
             <PreviewLayout
                 values={["Peliculas", "Reseñas"]}
@@ -104,6 +104,6 @@ const styles = StyleSheet.create({
         color: "grey",
     },
     selectedLabel: { // Color del texto
-        color: "white",
+        color: "black",
     },
 });

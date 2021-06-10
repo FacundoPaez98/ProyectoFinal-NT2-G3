@@ -116,10 +116,11 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     selected: {
-        backgroundColor: "#00406e",
+        backgroundColor: "lightblue",
+        borderWidth: 0,
     },
     selectedLabel: { // Color del texto
-        color: "white",
+        color: "black",
         textAlign: "center",
     },
 
