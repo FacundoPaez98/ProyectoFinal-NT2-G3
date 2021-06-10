@@ -43,7 +43,7 @@ export default function App() {
                 },
               })}
               tabBarOptions={{
-                activeTintColor: 'white',
+                activeTintColor: '#72d3f2',
                 inactiveTintColor: '#A5AAAE',
                 keyboardHidesTabBar: true,
                 style: {

@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
         width: 280,
     },
     button: {
-        backgroundColor: "#5865F2",
+        backgroundColor: "lightblue",
         paddingVertical: 15,
         paddingHorizontal: 70,
         borderRadius: 5,
     },
     buttonText: {
         fontSize: 20,
-        color: '#fff',
+        color: 'black',
     }
 });
 

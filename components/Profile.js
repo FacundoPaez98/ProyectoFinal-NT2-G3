@@ -7,7 +7,7 @@ import ScrollViewMovies from './ScrollViewMovies';
 
 
 export default function Profile() {
-    const [tabView, setTabView] = useState("");
+    const [tabView, setTabView] = useState("Peliculas");
 
     function showData(value) {
         if (value === "Peliculas") {
@@ -20,7 +20,7 @@ export default function Profile() {
     }
 
     return (
-        <View>
+        <View style={{backgroundColor:'#4A5156'}}>
             <InfoProfile />
             <PreviewLayout
                 values={["Peliculas", "Reseñas"]}
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     dataView: {
         flexGrow: 0,
         marginTop: '18%',
-        marginBottom: '55%'
+        marginBottom: '125%'
     },
     row: {
         flexDirection: "row",
@@ -104,6 +104,6 @@ const styles = StyleSheet.create({
         color: "grey",
     },
     selectedLabel: { // Color del texto
-        color: "white",
+        color: "black",
     },
 });
