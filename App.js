@@ -9,6 +9,8 @@ import Search from "./components/Search";
 import Profile from "./components/Profile";
 import Login from "./components/Login";
 
+
+
 const Tab = createBottomTabNavigator();
 
 const MyTheme = {

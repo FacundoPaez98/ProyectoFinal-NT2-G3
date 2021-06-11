@@ -9,7 +9,26 @@ function Login() {
 
     const volverDeRegistro = () => {
         setFlag(false)
-      }
+ 
+    }
+    
+    async function loginUser() {
+        // http://localhost:3000/login
+        // Authorization: bearer access_token
+
+        let headers = new Headers();
+        headers.append("Content-type", "application/json");
+        let reqOption = {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({email:mail, password})
+        }
+        try{
+           const usuario = await fetch("http://localhost:3000/usuarios/login", reqOption);
+        }catch(e){
+            console.log("fail")
+        }
+    }
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#4A5156' }}>
@@ -38,7 +57,7 @@ function Login() {
                             Registrate Aqui
                         </Text>
 
-                        <TouchableOpacity onPress={() => alert('Iniciando Sesión...')} style={styles.button}>
+                        <TouchableOpacity onPress={loginUser} style={styles.button}>
                             <Text style={styles.buttonText}>Iniciar Sesión</Text>
                         </TouchableOpacity>
                     </View>
