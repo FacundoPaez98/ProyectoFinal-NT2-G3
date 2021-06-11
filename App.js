@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme  } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign } from "@expo/vector-icons";
 import Home from "./components/Home";
@@ -9,11 +9,23 @@ import Search from "./components/Search";
 import Profile from "./components/Profile";
 import Login from "./components/Login";
 
+
+
 const Tab = createBottomTabNavigator();
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background:'#29292f'
+  },
+};
+
+
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={MyTheme}>
       <Tab.Navigator
               screenOptions={({ route }) => ({
                 tabBarIcon: ({ color, size }) => {
@@ -33,7 +45,7 @@ export default function App() {
                 },
               })}
               tabBarOptions={{
-                activeTintColor: 'white',
+                activeTintColor: '#72d3f2',
                 inactiveTintColor: '#A5AAAE',
                 keyboardHidesTabBar: true,
                 style: {
@@ -58,5 +70,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
+
 });

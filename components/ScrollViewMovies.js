@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Text } from 'react-native';
+import { View, ScrollView, StyleSheet, Text} from 'react-native';
 
 const DATA = [
     {
@@ -51,19 +51,22 @@ const Item = ({ title }) => (
 );
 
 const ScrollViewMovies = () => (
-    <ScrollView>
-        {
-            DATA.map(item => 
-                <Item title={item.title} />
-            )
-        }
-    </ScrollView>
+    
+        <ScrollView style={styles.dataView}>
+            {
+                DATA.map(item =>
+                    <Item title={item.title} key={item.id} />
+                )
+            }
+        </ScrollView>
+    
 )
 
 const styles = StyleSheet.create({
+
     item: {
         backgroundColor: '#676C6F',
-        padding: 20,
+        padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
     },
