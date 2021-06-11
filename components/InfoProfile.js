@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Constants from 'expo-constants';
 
 
 
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
     },
     userName: {
-        marginTop: '10%',
+        paddingTop: Constants.statusBarHeight,
         textAlign: 'left',
         marginLeft: 20,
         fontSize: 18,
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     },
     TextFollow: {
         textAlign: "center",
-        color: "rgb(136, 153, 166)",
+        color: "white",
         fontWeight: "300"
     },
 
