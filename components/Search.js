@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, StatusBar } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { AntDesign } from "@expo/vector-icons";
 import SearchUser from "./SearchUser"
 import SearchMovie from "./SearchMovie"
 

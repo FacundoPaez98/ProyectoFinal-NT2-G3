@@ -10,11 +10,8 @@ function SearchMovie() {
 
 
     async function buscarApi() {
-        let headers = new Headers();
-        headers.append("Content-type", "application/json");
         let reqOption = {
             method: "GET",
-            headers: headers,
         }
         let urlApi = URL + text;
         try{
@@ -27,12 +24,11 @@ function SearchMovie() {
 
     return (
         <View style={{ flex: 1, backgroundColor: '#4A5156' }}>
-            <View
-            style={{ flex: 1, flexDirection: "row", justifyContent: 'center', alignItems: 'top',backgroundColor: '#4A5156' }}>
+            <View style={{ flex: 1, flexDirection: "row", justifyContent: 'center', backgroundColor: '#4A5156' }}>
             <TextInput
                 style={styles.input}
                 value={text}
-                placeholder={'Nombre usuario'}
+                placeholder={'Batman, Harry Potter...'}
                 onChangeText={(text) => setText(text)}
             />
 
@@ -40,7 +36,7 @@ function SearchMovie() {
                 <Text style={styles.buttonText}>Buscar</Text>
             </TouchableOpacity>
             </View>
-            <View>
+            <View style={{ flex:6 }}>
                 <ScrollView data = {peliculas}/>
             </View>
         </View>
