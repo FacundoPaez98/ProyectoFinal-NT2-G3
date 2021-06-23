@@ -1,31 +1,30 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, Text} from 'react-native';
 
-const Item = ({ title, anio}) => (
+
+
+const Item = ({ username }) => (
     <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.title}> {anio}</Text>
+        <Text style={styles.title}>{username}</Text>
     </View>
 );
 
-const ScrollViewMovies = (props) => (
+const ScrollViewUser = (props) => (
     
         <ScrollView style={styles.dataView}>
             {
-                
                 props.data.map(item =>
-                    <Item title={item.titulo} anio={item.anio} key={item.id} />
+                    <Item username={item.username} key={item._id} />
                 )
-                
             }
         </ScrollView>
     
+        
 )
 
 const styles = StyleSheet.create({
 
     item: {
-        flexDirection: "row",
         backgroundColor: '#676C6F',
         padding: 10,
         marginVertical: 8,
@@ -37,4 +36,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ScrollViewMovies;
+export default ScrollViewUser;

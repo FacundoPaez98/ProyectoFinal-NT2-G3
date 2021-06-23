@@ -33,25 +33,8 @@ function Search() {
 }
 
 const styles = StyleSheet.create({
-    input: {
-        height: 50,
-        margin: 22,
-        borderWidth: 1,
-        padding: 10,
-        borderRadius: 5,
-        width: 280,
-        color: '#E2EAE9',
-    },
-    button: {
-        backgroundColor: "#5865F2",
-        paddingVertical: 15,
-        paddingHorizontal: 70,
-        borderRadius: 5,
-    },
-    buttonText: {
-        fontSize: 20,
-        color: '#fff',
-    }
+
+
 });
 
 export default Search;
