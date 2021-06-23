@@ -1,14 +1,55 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import GlobalContext from './global/context';
 
 function SignUp({ volverDeRegistro }) {
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const {dataUsuario, setAuthenticated} = useContext(GlobalContext);
+
+    async function registrarUsuario(){
+        let headers = new Headers();
+        headers.append("Content-type", "application/json");
+        let reqOption = {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({nombre, apellido, email:mail, username, password})
+        }
+
+        try{
+            const data = await fetch("http://localhost:3000/usuario/signup", reqOption).then(response => response.json());
+            changeContext(data);
+            console.log(data); 
+            setAuthenticated(true)
+         }catch(e){
+             console.log("mail o usuario ya en uso");
+         }
+    }
+
+    function changeContext(data){
+        dataUsuario.token = data.token;
+        dataUsuario.usuario._id = data.usuario._id;
+        dataUsuario.usuario.nombre = data.usuario.nombre;
+        dataUsuario.usuario.apellido = data.usuario.apellido;
+        dataUsuario.usuario.email = data.usuario.email;
+        dataUsuario.usuario.username = data.usuario.username;
+        dataUsuario.usuario.seguidores = data.usuario.seguidores;
+        dataUsuario.usuario.seguidos = data.usuario.seguidos;
+        dataUsuario.usuario.titulos = data.usuario.titulos;
+    }
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#4A5156' }}>
+            <Text style={styles.text1}>Nombre de Usuario</Text>
+            <TextInput
+                style={styles.input}
+                value={username}
+                onChangeText={(text) => setUsername(text)}
+            />
+
             <Text style={styles.text3}>Nombre</Text>
             <TextInput
                 style={styles.input}
@@ -35,6 +76,7 @@ function SignUp({ volverDeRegistro }) {
             <TextInput
                 style={styles.input}
                 value={password}
+                secureTextEntry={true}
                 onChangeText={(text) => setPassword(text)}
             />
 
@@ -42,7 +84,7 @@ function SignUp({ volverDeRegistro }) {
                 onPress={() => volverDeRegistro()}>
                 Cancelar
             </Text>
-            <TouchableOpacity onPress={() => alert('Registrandose...')} style={styles.button}>
+            <TouchableOpacity onPress={registrarUsuario} style={styles.button}>
                 <Text style={styles.buttonText}>Registrarse</Text>
             </TouchableOpacity>
 
@@ -61,14 +103,14 @@ const styles = StyleSheet.create({
         color: '#E2EAE9',
     },
     button: {
-        backgroundColor: "#5865F2",
+        backgroundColor: "lightblue",
         paddingVertical: 15,
         paddingHorizontal: 70,
         borderRadius: 5,
     },
     buttonText: {
         fontSize: 20,
-        color: '#fff',
+        color: 'black',
     },
     text1: {
         position: 'relative',

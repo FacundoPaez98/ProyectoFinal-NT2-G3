@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Constants from 'expo-constants';
-
+import GlobalContext from './global/context';
 
 
 export default function infoProfile() {
 
     const [follow, setFollow] = useState("Seguir");
+    const { dataUsuario } = useContext(GlobalContext);
 
     function changeFollowButtom() {
         if (follow == "Seguir") {
@@ -27,7 +28,7 @@ export default function infoProfile() {
     return (
         <View >
 
-            <Text style={styles.userName}>TestUsername </Text>
+            <Text style={styles.userName}>{dataUsuario.usuario.username} </Text>
 
             <View style={styles.row}>
                 <PreviewLayout
@@ -37,9 +38,9 @@ export default function infoProfile() {
                 ></PreviewLayout>
 
                 <View style={styles.columm}>
-                    <Text style={styles.followingCount}>100 </Text>
+                    <Text style={styles.followingCount}>{dataUsuario.usuario.seguidos.length} </Text>
                     <Text style={styles.TextFollow}> Seguidos</Text>
-                    <Text style={styles.followingCount}>85 </Text>
+                    <Text style={styles.followingCount}>{dataUsuario.usuario.seguidores.length} </Text>
                     <Text style={styles.TextFollow}> Seguidores</Text>
 
                 </View>
