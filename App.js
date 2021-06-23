@@ -25,7 +25,7 @@ const MyTheme = {
 export default function App() {
 
   const dataUsuario = useContext(GlobalContext);
-  const [authenticated, setAuthenticated] = useState(false)
+  const [authenticated, setAuthenticated] = useState(true)
 
   return (
     <GlobalContext.Provider value={{ dataUsuario, setAuthenticated }}>
