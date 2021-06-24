@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import ScrollView from './ScrollViewUser'
 
 
-const URL = "http://localhost:3000/usuario/";
+const URL = "https://obscure-thicket-15756.herokuapp.com/usuario/";
 
 function SearchUser() {
     const [text, setText] = useState('');

@@ -24,7 +24,7 @@ function Login() {
             body: JSON.stringify({email:mail, password})
         }
         try{
-           const data = await fetch("http://localhost:3000/usuario/login", reqOption).then(response => response.json());
+           const data = await fetch("https://obscure-thicket-15756.herokuapp.com/usuario/login", reqOption).then(response => response.json());
            changeContext(data); 
            setAuthenticated(true)
         }catch(e){

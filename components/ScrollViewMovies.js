@@ -8,9 +8,9 @@ const Item = ({ title, anio, foto }) => (
     <View style={styles.item}>
         {
             (foto) ?
-                <Image style={styles.logo} source={foto}></Image>
+                <Image style={styles.logo} source={{uri: foto}}></Image>
                 :
-                <Image style={styles.logo} source={noImage}></Image>
+                <Image style={styles.logo} source={{uri: noImage}}></Image>
         }
         <Text style={styles.title}>Titulo: {title}</Text>
         <Text style={styles.title}>Año de lanzamiento: {anio}</Text>

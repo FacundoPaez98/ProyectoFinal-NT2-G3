@@ -20,7 +20,7 @@ function SignUp({ volverDeRegistro }) {
         }
 
         try{
-            const data = await fetch("http://localhost:3000/usuario/signup", reqOption).then(response => response.json());
+            const data = await fetch("https://obscure-thicket-15756.herokuapp.com/usuario/signup", reqOption).then(response => response.json());
             changeContext(data);
             console.log(data); 
             setAuthenticated(true)

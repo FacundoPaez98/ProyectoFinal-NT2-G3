@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import ScrollView from './ScrollViewMovies';
 
-const URL = "http://localhost:3000/api/peliculas/"
+const URL = "https://obscure-thicket-15756.herokuapp.com/api/peliculas/"
 
 function SearchMovie() {
     const [text, setText] = useState('');
