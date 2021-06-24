@@ -1,78 +1,67 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Text} from 'react-native';
+import { View, ScrollView, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 
-const DATA = [
-    {
-        id: '1',
-        title: 'Titulo 1',
-    },
-    {
-        id: '2',
-        title: 'Titulo 2',
-    },
-    {
-        id: '3',
-        title: 'Titulo 3',
-    },
-    {
-        id: '4',
-        title: 'Titulo 4',
-    },
-    {
-        id: '5',
-        title: 'Titulo 5',
-    },
-    {
-        id: '6',
-        title: 'Titulo 6',
-    },
-    {
-        id: '7',
-        title: 'Titulo 7',
-    },
-    {
-        id: '8',
-        title: 'Titulo 8',
-    },
-    {
-        id: '9',
-        title: 'Titulo 9',
-    },
-    {
-        id: '10',
-        title: 'Titulo 10',
-    },
-];
+const noImage = "https://thumbs.dreamstime.com/b/no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpg";
 
-const Item = ({ title }) => (
+const Item = ({ title, anio, foto }) => (
     <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
+        {
+            (foto) ?
+                <Image style={styles.logo} source={foto}></Image>
+                :
+                <Image style={styles.logo} source={noImage}></Image>
+        }
+        <Text style={styles.title}>Titulo: {title}</Text>
+        <Text style={styles.title}>Año de lanzamiento: {anio}</Text>
     </View>
 );
 
-const ScrollViewMovies = () => (
-    
-        <ScrollView style={styles.dataView}>
-            {
-                DATA.map(item =>
-                    <Item title={item.title} key={item.id} />
-                )
-            }
-        </ScrollView>
-    
+const ScrollViewMovies = (props) => (
+
+    <ScrollView>
+        {
+            props.data.map(function (item) {
+                if(item.foto != null){
+                    return (
+                    <TouchableOpacity onPress={() => alert("redirigiendo al perfil de la pelicula...") } key={item.id}>
+                        <Item title={item.titulo} anio={item.anio}  foto={item.foto.imageUrl} />
+                    </TouchableOpacity>
+                    )
+                }
+                else{
+                    return (
+                    <TouchableOpacity onPress={() => alert("redirigiendo al perfil de la pelicula...") } key={item.id}>
+                        <Item title={item.titulo} anio={item.anio} />
+                    </TouchableOpacity>
+                    )
+                }
+            })
+        }
+    </ScrollView>
+
 )
 
 const styles = StyleSheet.create({
 
     item: {
+        alignItems: "center",
+        flex:1,
+        flexDirection: "column",
         backgroundColor: '#676C6F',
         padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
     },
     title: {
-        fontSize: 32,
+        flexDirection: "row",
+        fontSize: 15,
         color: '#E2EAE9',
+    },
+    logo: {
+        
+        flexDirection: "row",
+        width: 100,
+        height: 150,
     },
 });
 
