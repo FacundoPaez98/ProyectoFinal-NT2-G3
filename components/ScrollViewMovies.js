@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Text} from 'react-native';
+import { View, ScrollView, StyleSheet, Text, Image} from 'react-native';
 
-const Item = ({ title, anio}) => (
+const Item = ({ title, anio, foto}) => (
     <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.title}> {anio}</Text>
+        <Image style={styles.Logo} source={foto}></Image>
+        <Text style={styles.title}>Titulo: {title}</Text>
+        <Text style={styles.title}>Año de lanzamiento: {anio}</Text>
     </View>
 );
 
@@ -14,7 +15,7 @@ const ScrollViewMovies = (props) => (
             {
                 
                 props.data.map(item =>
-                    <Item title={item.titulo} anio={item.anio} key={item.id} />
+                    <Item title={item.titulo} anio={item.anio} key={item.id} foto={item.foto.imageUrl}/>
                 )
                 
             }
@@ -32,9 +33,14 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
     },
     title: {
-        fontSize: 32,
+        flexDirection: "column",
+        fontSize: 15,
         color: '#E2EAE9',
     },
+    Logo: {
+        width: 100,
+        height: 150,
+      },
 });
 
 export default ScrollViewMovies;
