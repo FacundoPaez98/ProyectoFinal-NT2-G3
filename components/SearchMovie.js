@@ -15,7 +15,10 @@ function SearchMovie() {
         }
         let urlApi = URL + text;
         try{
-            const data = await fetch(urlApi, reqOption).then(response => response.json());
+            let data = await fetch(urlApi, reqOption).then(response => response.json());
+            data.forEach(element => {
+                element.foto = element.foto || {};
+            });
             setPeliculas(data)
          }catch(e){
              alert("Error")

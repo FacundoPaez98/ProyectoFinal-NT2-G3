@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Text} from 'react-native';
-
-
+import { View, ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import Home from './Home';
 
 const Item = ({ username }) => (
     <View style={styles.item}>
@@ -9,18 +8,20 @@ const Item = ({ username }) => (
     </View>
 );
 
-const ScrollViewUser = (props) => (
-    
-        <ScrollView style={styles.dataView}>
+function ScrollViewUser (props) {
+    return (
+        <ScrollView>
             {
-                props.data.map(item =>
-                    <Item username={item.username} key={item._id} />
-                )
+                props.data.map(function (item) {
+                    return (
+                        <TouchableOpacity onPress={() => alert("redirigiendo a perfil del usuario...")} key={item._id}>
+                            <Item username={item.username} />
+                        </TouchableOpacity>  
+                    )
+                })
             }
         </ScrollView>
-    
-        
-)
+)} 
 
 const styles = StyleSheet.create({
 
