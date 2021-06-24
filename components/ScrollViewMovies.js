@@ -44,18 +44,22 @@ const ScrollViewMovies = (props) => (
 const styles = StyleSheet.create({
 
     item: {
-        flexDirection: "row",
+        alignItems: "center",
+        flex:1,
+        flexDirection: "column",
         backgroundColor: '#676C6F',
         padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
     },
     title: {
-        flexDirection: "column",
+        flexDirection: "row",
         fontSize: 15,
         color: '#E2EAE9',
     },
     logo: {
+        
+        flexDirection: "row",
         width: 100,
         height: 150,
     },
