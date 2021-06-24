@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Constants from 'expo-constants';
 import GlobalContext from './global/context';
 
-const URL = "http://localhost:3000/reviews//title-reviews/"
+const URL = "http://localhost:3000/api/reviews/title-reviews/"
 
 
 

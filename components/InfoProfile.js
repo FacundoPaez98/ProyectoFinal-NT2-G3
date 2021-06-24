@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         paddingTop: Constants.statusBarHeight,
         textAlign: 'left',
         marginLeft: 20,
-        fontSize: 18,
+        fontSize: 28,
         color: "white",
         fontWeight: "bold"
     },
