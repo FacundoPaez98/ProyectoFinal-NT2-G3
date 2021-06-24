@@ -10,7 +10,8 @@ import Profile from "./components/Profile";
 import Logout from './components/Logout';
 import Login from "./components/Login";
 import GlobalContext from "./components/global/context";
-
+import { navigationRef } from './utils/RootNavigation';
+import MovieProfile from './components/MoviesProfile';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,13 +26,13 @@ const MyTheme = {
 export default function App() {
 
   const dataUsuario = useContext(GlobalContext);
-  const [authenticated, setAuthenticated] = useState(true)
+  const [authenticated, setAuthenticated] = useState(false)
 
   return (
     <GlobalContext.Provider value={{ dataUsuario, setAuthenticated }}>
       {
         (authenticated) ?
-          <NavigationContainer theme={MyTheme}>
+          <NavigationContainer theme={MyTheme} ref={navigationRef}>
             <Tab.Navigator
               screenOptions={({ route }) => ({
                 tabBarIcon: ({ color, size }) => {

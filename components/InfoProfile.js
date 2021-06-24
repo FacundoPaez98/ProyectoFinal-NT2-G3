@@ -7,9 +7,11 @@ import GlobalContext from './global/context';
 
 export default function infoProfile() {
 
-    const [follow, setFollow] = useState("Seguir");
     const { dataUsuario } = useContext(GlobalContext);
+    
 
+    /*
+    const [follow, setFollow] = useState("Seguir");
     function changeFollowButtom() {
         if (follow == "Seguir") {
             setFollow("Siguiendo")
@@ -24,6 +26,7 @@ export default function infoProfile() {
             setFollow("Seguir");
         }
     }
+    */
 
     return (
         <View >
@@ -31,12 +34,13 @@ export default function infoProfile() {
             <Text style={styles.userName}>{dataUsuario.usuario.username} </Text>
 
             <View style={styles.row}>
-                <PreviewLayout
+                {/* esto va en UserProfile q es para ver los perfil de los otros usuarios
+                <PreviewLayout  
                     value={follow}
                     selectedValue={follow}
                     setSelectedValue={changeFollowButtom}
                 ></PreviewLayout>
-
+                */}
                 <View style={styles.columm}>
                     <Text style={styles.followingCount}>{dataUsuario.usuario.seguidos.length} </Text>
                     <Text style={styles.TextFollow}> Seguidos</Text>
@@ -92,11 +96,12 @@ const styles = StyleSheet.create({
         paddingTop: Constants.statusBarHeight,
         textAlign: 'left',
         marginLeft: 20,
-        fontSize: 18,
+        fontSize: 28,
         color: "white",
         fontWeight: "bold"
     },
     followingCount: {
+        alignItems: 'center',
         paddingHorizontal: "13%",
         textAlign: "center",
         color: "white",
@@ -104,6 +109,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     TextFollow: {
+        alignItems: 'center',
         textAlign: "center",
         color: "white",
         fontWeight: "300"

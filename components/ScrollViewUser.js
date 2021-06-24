@@ -26,6 +26,7 @@ function ScrollViewUser (props) {
 const styles = StyleSheet.create({
 
     item: {
+        alignItems: "center",
         backgroundColor: '#676C6F',
         padding: 10,
         marginVertical: 8,
