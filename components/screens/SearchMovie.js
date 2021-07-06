@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import ScrollView from './ScrollViewUser'
+import ScrollView from '../ScrollViewMovies';
 
+const URL = "https://obscure-thicket-15756.herokuapp.com/api/peliculas/"
 
-const URL = "https://obscure-thicket-15756.herokuapp.com/usuario/";
-
-function SearchUser() {
+function SearchMovie() {
     const [text, setText] = useState('');
-    const [user, setUser] = useState([]);
+    const [peliculas, setPeliculas] = useState([]);
+
 
     async function buscarApi() {
         let reqOption = {
@@ -15,8 +15,11 @@ function SearchUser() {
         }
         let urlApi = URL + text;
         try{
-            const data = await fetch(urlApi, reqOption).then(response => response.json());
-            setUser(data)
+            let data = await fetch(urlApi, reqOption).then(response => response.json());
+            data.forEach(element => {
+                element.foto = element.foto || {};
+            });
+            setPeliculas(data)
          }catch(e){
              alert("Error")
          }  
@@ -28,7 +31,8 @@ function SearchUser() {
             <TextInput
                 style={styles.input}
                 value={text}
-                placeholder={'Nombre usuario'}
+                placeholder={'Batman, Harry Potter...'}
+                placeholderTextColor='#E2EAE9'
                 onChangeText={(text) => setText(text)}
             />
 
@@ -36,12 +40,13 @@ function SearchUser() {
                 <Text style={styles.buttonText}>Buscar</Text>
             </TouchableOpacity>
             </View>
-            <View style={{ flex: 6}}>
-                <ScrollView data = {user}/>
+            <View style={{ flex:6 }}>
+                <ScrollView data = {peliculas}/>
             </View>
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     input: {
         height: 50,
@@ -49,7 +54,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         borderRadius: 5,
-        width: "45%"
+        width: "45%",
+        color: '#E2EAE9'
     },
     button: {
         margin: 14,
@@ -64,4 +70,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default SearchUser;
+export default SearchMovie;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Constants from 'expo-constants';
-import GlobalContext from './global/context';
+import GlobalContext from '../global/context';
 
 const URL = "http://localhost:3000/api/reviews/title-reviews/"
 

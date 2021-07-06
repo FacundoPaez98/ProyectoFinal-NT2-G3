@@ -16,6 +16,7 @@ function SearchTabs() {
                 keyboardHidesTabBar: true,
                 style: {
                     padding: 10,
+                    marginTop: 20,
                     backgroundColor: '#4A5156',
                     borderTopColor: '#111112',
                 },

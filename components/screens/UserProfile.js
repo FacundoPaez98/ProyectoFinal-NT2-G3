@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import InfoProfile from './InfoProfile';
-import ScrollViewMovies from './ScrollViewMovies';
-import GlobalContext from './global/context';
+import InfoProfile from '../InfoProfile';
+import ScrollViewMovies from '../ScrollViewMovies';
+import GlobalContext from '../global/context';
 
 
 

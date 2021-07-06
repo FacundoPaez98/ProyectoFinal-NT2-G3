@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import GlobalContext from './global/context';
+import GlobalContext from '../global/context';
 
 function Logout() {
 

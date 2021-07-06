@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import SearchTabs from './SearchTabs';
-import Test1 from './Test1';
-import Test2 from './Test2';
+import Test1 from '../Test1';
+import Test2 from '../Test2';
 
 const SearchStack = createStackNavigator();
 
