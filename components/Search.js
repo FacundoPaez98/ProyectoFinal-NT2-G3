@@ -1,39 +1,33 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, StatusBar } from 'react-native';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import SearchUser from "./SearchUser"
-import SearchMovie from "./SearchMovie"
+import React from 'react';
+import { createStackNavigator } from "@react-navigation/stack";
+import SearchTabs from './SearchTabs';
+import Test1 from './Test1';
+import Test2 from './Test2';
 
-const Tab = createMaterialTopTabNavigator();
+const SearchStack = createStackNavigator();
 
 function Search() {
 
     return (
-        <Tab.Navigator
-            initialRouteName="SearchMovie"
-            tabBarOptions={{
-                activeTintColor: 'white',
-                inactiveTintColor: '#A5AAAE',
-                keyboardHidesTabBar: true,
-                style: {
-                    padding: 10,
-                    backgroundColor: '#4A5156',
-                    borderTopColor: '#111112',
-                },
-            }}>
-
-            <Tab.Screen name="Usuario" component={SearchUser} />
-            <Tab.Screen name="Pelicula" component={SearchMovie} />
-
-        </Tab.Navigator>
-
+            <SearchStack.Navigator
+                screenOptions={{
+                headerShown: false
+                }}
+            >
+                <SearchStack.Screen 
+                name="SearchTabs" 
+                component={SearchTabs}
+                />
+                <SearchStack.Screen 
+                name="PerfilUsuario" 
+                component={Test1}
+                />
+                <SearchStack.Screen 
+                name="PerfilPelicula" 
+                component={Test2}
+                />
+            </SearchStack.Navigator>
     );
 }
-
-const styles = StyleSheet.create({
-
-
-});
 
 export default Search;

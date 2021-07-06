@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import Home from './Home';
+import * as RootNavigation from '../utils/RootNavigation';
 
 const Item = ({ username }) => (
     <View style={styles.item}>
@@ -9,12 +9,17 @@ const Item = ({ username }) => (
 );
 
 function ScrollViewUser (props) {
+
+    function navigateUserProfile(usuario) {
+        RootNavigation.navigate("PerfilUsuario");
+    }
+
     return (
         <ScrollView>
             {
                 props.data.map(function (item) {
                     return (
-                        <TouchableOpacity onPress={() => alert("redirigiendo a perfil del usuario...")} key={item._id}>
+                        <TouchableOpacity onPress={() => navigateUserProfile(item)} key={item._id}>
                             <Item username={item.username} />
                         </TouchableOpacity>  
                     )
