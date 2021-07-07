@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useContext } from "react";
+import { StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants';
 import GlobalContext from './global/context';
 
@@ -57,59 +57,3 @@ const styles = StyleSheet.create({
         fontWeight: "300"
     }
 });
-
-// const PreviewLayout = ({
-//     value,
-//     selectedValue,
-//     setSelectedValue,
-
-// }) => (
-//     <View style={{ padding: 10, flex: 1 }}>
-//         <View>
-//             <TouchableOpacity
-//                 key={value}
-//                 onPress={() => { setSelectedValue() }}
-//                 style={[
-//                     styles.button,
-//                     selectedValue === value && styles.selected,
-//                 ]}
-//             >
-//                 <Text
-//                     style={[
-//                         styles.followButton,
-//                         selectedValue === value && styles.selectedLabel,
-//                     ]}
-//                 >
-//                     {value}
-//                 </Text>
-//             </TouchableOpacity>
-
-//         </View>
-//     </View>
-// )
-
-/* esto va en UserProfile q es para ver los perfil de los otros usuarios
-<PreviewLayout
-    value={follow}
-    selectedValue={follow}
-    setSelectedValue={changeFollowButtom}
-></PreviewLayout>
-*/
-
-/*
-const [follow, setFollow] = useState("Seguir");
-function changeFollowButtom() {
-    if (follow == "Seguir") {
-        setFollow("Siguiendo")
-    } else {
-        setFollow("Seguir")
-    }
-}
-function isFollowing(value) {
-    if (value) {
-        setFollow("Siguiendo");
-    } else {
-        setFollow("Seguir");
-    }
-}
-*/

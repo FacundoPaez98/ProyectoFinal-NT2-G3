@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         marginTop: 20,
     },
-    button: {
+    buttonList: {
         height: 40,
         paddingHorizontal: 6,
         paddingVertical: 6,

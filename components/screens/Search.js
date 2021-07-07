@@ -1,8 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import SearchTabs from './SearchTabs';
-import MovieProfile from './MoviesProfile';
 import UserProfile from './UserProfile';
+import MovieProfile from './MoviesProfile';
+
 
 const SearchStack = createStackNavigator();
 
