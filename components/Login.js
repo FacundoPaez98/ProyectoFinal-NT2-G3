@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import SignUp from './SignUp';
+import GlobalContext from './global/context';
 
 function Login() {
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
     const [showForm, setFlag] = useState(false)
+    const {dataUsuario, setAuthenticated} = useContext(GlobalContext);
 
     const volverDeRegistro = () => {
         setFlag(false)
- 
     }
     
     async function loginUser() {
-        // http://localhost:3000/login
         // Authorization: bearer access_token
 
         let headers = new Headers();
@@ -24,10 +24,24 @@ function Login() {
             body: JSON.stringify({email:mail, password})
         }
         try{
-           const usuario = await fetch("http://localhost:3000/usuarios/login", reqOption);
+           const data = await fetch("https://obscure-thicket-15756.herokuapp.com/usuario/login", reqOption).then(response => response.json());
+           changeContext(data); 
+           setAuthenticated(true)
         }catch(e){
             console.log("fail")
         }
+    }
+
+    function changeContext(data){
+        dataUsuario.token = data.token;
+        dataUsuario.usuario._id = data.usuario._id;
+        dataUsuario.usuario.nombre = data.usuario.nombre;
+        dataUsuario.usuario.apellido = data.usuario.apellido;
+        dataUsuario.usuario.email = data.usuario.email;
+        dataUsuario.usuario.username = data.usuario.username;
+        dataUsuario.usuario.seguidores = data.usuario.seguidores;
+        dataUsuario.usuario.seguidos = data.usuario.seguidos;
+        dataUsuario.usuario.titulos = data.usuario.titulos;
     }
 
     return (
@@ -49,6 +63,7 @@ function Login() {
                         <TextInput
                             style={styles.input}
                             value={password}
+                            secureTextEntry={true}
                             onChangeText={(text) => setPassword(text)}
                         />
 

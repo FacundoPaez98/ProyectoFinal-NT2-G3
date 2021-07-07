@@ -1,39 +1,42 @@
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import InfoProfile from './InfoProfile';
-import ScrollViewMovies from './ScrollViewMovies';
+import InfoProfile from '../InfoProfile';
+import ScrollViewMovies from '../ScrollViewMovies';
+import GlobalContext from '../global/context';
 
 
 
 export default function Profile() {
     const [tabView, setTabView] = useState("Peliculas");
 
+    const { dataUsuario } = useContext(GlobalContext);
+
     function showData(value) {
         if (value === "Peliculas") {
-            return <ScrollViewMovies />
+            if (dataUsuario.usuario.titulos.length == 0) {
+                return <Text style={{ fontSize: 15, color: '#E2EAE9' }}>No hay titulos!</Text>
+            } else {
+                return <ScrollViewMovies data={dataUsuario.usuario.titulos} />
+            }
 
         } if (value === "Reseñas") {
-            return <Text>Reseñas!</Text>
+            return <Text style={{ fontSize: 15, color: '#E2EAE9'}}>Reseñas!</Text>
 
         }
     }
 
     return (
-        <View style={{backgroundColor:'#4A5156'}}>
+        <View style={{ backgroundColor: '#4A5156', flex: 2 }}>
             <InfoProfile />
             <PreviewLayout
                 values={["Peliculas", "Reseñas"]}
                 selectedValue={tabView}
                 setSelectedValue={setTabView}
-            >
-
-            </PreviewLayout>
-
-            <View style= {styles.dataView}>
-                    {showData(tabView)}
+            />
+            <View style={styles.dataView, {flex: 4}}>
+                {showData(tabView)}
             </View>
-
         </View>
     );
 }
@@ -45,14 +48,14 @@ const PreviewLayout = ({
     setSelectedValue,
 
 }) => (
-    <View style={{ padding: 10, flex: 1 }}>
+    <View style={{ padding: 10}}>
         <View style={styles.row}>
             {values.map((value) => (
                 <TouchableOpacity
                     key={value}
                     onPress={() => { setSelectedValue(value) }}
                     style={[
-                        styles.button,
+                        styles.buttonList,
                         selectedValue === value && styles.selected,
                     ]}
                 >
@@ -72,6 +75,8 @@ const PreviewLayout = ({
 
 const styles = StyleSheet.create({
     dataView: {
+        justifyContent: "center",
+        alignItems: 'center',
         flexGrow: 0,
         marginTop: '18%',
         marginBottom: '125%'
@@ -81,7 +86,7 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         marginTop: 20,
     },
-    button: {
+    buttonList: {
         height: 40,
         paddingHorizontal: 6,
         paddingVertical: 6,
