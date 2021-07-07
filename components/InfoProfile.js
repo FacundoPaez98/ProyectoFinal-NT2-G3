@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import Constants from 'expo-constants';
 import GlobalContext from './global/context';
 
-
 export default function infoProfile() {
 
     const { dataUsuario } = useContext(GlobalContext);

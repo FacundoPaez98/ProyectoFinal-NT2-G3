@@ -1,11 +1,8 @@
-
 import React, { useContext, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import InfoProfile from '../InfoProfile';
 import ScrollViewMovies from '../ScrollViewMovies';
 import GlobalContext from '../global/context';
-
-
 
 export default function Profile() {
     const [tabView, setTabView] = useState("Peliculas");
@@ -26,6 +23,37 @@ export default function Profile() {
         }
     }
 
+    const PreviewLayout = ({
+        values,
+        selectedValue,
+        setSelectedValue,
+    
+    }) => (
+        <View style={{ padding: 10}}>
+            <View style={styles.row}>
+                {values.map((value) => (
+                    <TouchableOpacity
+                        key={value}
+                        onPress={() => { setSelectedValue(value) }}
+                        style={[
+                            styles.buttonList,
+                            selectedValue === value && styles.selected,
+                        ]}
+                    >
+                        <Text
+                            style={[
+                                styles.buttonLabel,
+                                selectedValue === value && styles.selectedLabel,
+                            ]}
+                        >
+                            {value}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
+    );
+
     return (
         <View style={{ backgroundColor: '#4A5156', flex: 2 }}>
             <InfoProfile />
@@ -40,38 +68,6 @@ export default function Profile() {
         </View>
     );
 }
-
-
-const PreviewLayout = ({
-    values,
-    selectedValue,
-    setSelectedValue,
-
-}) => (
-    <View style={{ padding: 10}}>
-        <View style={styles.row}>
-            {values.map((value) => (
-                <TouchableOpacity
-                    key={value}
-                    onPress={() => { setSelectedValue(value) }}
-                    style={[
-                        styles.buttonList,
-                        selectedValue === value && styles.selected,
-                    ]}
-                >
-                    <Text
-                        style={[
-                            styles.buttonLabel,
-                            selectedValue === value && styles.selectedLabel,
-                        ]}
-                    >
-                        {value}
-                    </Text>
-                </TouchableOpacity>
-            ))}
-        </View>
-    </View>
-);
 
 const styles = StyleSheet.create({
     dataView: {

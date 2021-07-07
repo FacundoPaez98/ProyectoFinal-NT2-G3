@@ -7,9 +7,7 @@ import GlobalContext from '../global/context';
 const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/title-reviews/"
 const noImage = "https://thumbs.dreamstime.com/b/no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpg";
 
-
 export default function MovieProfile({route}) {
-
 
     const [tabView, setTabView] = useState("Reviews");
     const [reviews, setReviews] = useState([]);
