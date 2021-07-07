@@ -5,7 +5,7 @@ function Review(props) {
 
     const Item = ({ texto }) => (
         <View style={styles.item}>
-            <Text style={styles.title}>{Texto}</Text>
+            <Text style={styles.title}>{texto}</Text>
         </View>
     );
 
@@ -14,7 +14,7 @@ function Review(props) {
             {
                 props.data.map(function (item) {
                     return (
-                        <Item username={item.texto} />
+                        <Item key={item._id} texto={item.texto} />
                     )
                 })
             }
@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Resenias;
+export default Review;

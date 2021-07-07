@@ -1,17 +1,35 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import InfoProfile from '../InfoProfile';
 import ScrollViewMovies from '../ScrollViewMovies';
 import GlobalContext from '../global/context';
 
+const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/user-reviews/";
 
-
-export default function UserProfile(props) {
+export default function UserProfile({route}) {
 
     const [tabView, setTabView] = useState("Peliculas");
-    
+    const [reviews, setReviews] = useState([]);
     const [follow, setFollow] = useState("");
     const { dataUsuario } = useContext(GlobalContext);
+
+    async function buscarReviewsUsuario() {  
+        let reqOption = {
+            method: "GET",
+        }
+        let urlApi = URL + "1" // props.data.id;  el 1 es para probar
+        try{
+            let data = await fetch(urlApi, reqOption).then(response => response.json());
+            setReviews(data)
+         }catch(e){
+             alert("Error")
+         }  
+    }
+
+    useEffect(() => {
+        buscarReviewsUsuario();
+        //isFollowing();
+    }, []);
 
     function changeFollowButtom() {
         if (follow == "Seguir") {
@@ -32,7 +50,7 @@ export default function UserProfile(props) {
 
     function showData(value) {
         if (value === "Peliculas") {
-            return <ScrollViewMovies data = {props.data.titulos}/>
+            return <ScrollViewMovies data = {route.params.titulos}/>
 
         } if (value === "Reseñas") {
             return <Text>Reseñas!</Text>
@@ -40,11 +58,71 @@ export default function UserProfile(props) {
         }
     }
 
+    const PreviewLayout = ({
+        value,
+        selectedValue,
+        setSelectedValue,
+    
+    }) => (
+        <View style={{ padding: 10, flex: 1 }}>
+            <View>
+                <TouchableOpacity
+                    key={value}
+                    onPress={() => { setSelectedValue() }}
+                    style={[
+                        styles.button,
+                        selectedValue === value && styles.selected,
+                    ]}
+                >
+                    <Text
+                        style={[
+                            styles.followButton,
+                            selectedValue === value && styles.selectedLabel,
+                        ]}
+                    >
+                        {value}
+                    </Text>
+                </TouchableOpacity>
+    
+            </View>
+        </View>
+    )
+    const PreviewLayoutListado = ({
+        values,
+        selectedValue,
+        setSelectedValue,
+    
+    }) => (
+        <View style={{ padding: 10, flex: 1 }}>
+            <View style={styles.row}>
+                {values.map((value) => (
+                    <TouchableOpacity
+                        key={value}
+                        onPress={() => { setSelectedValue(value) }}
+                        style={[
+                            styles.button,
+                            selectedValue === value && styles.selected,
+                        ]}
+                    >
+                        <Text
+                            style={[
+                                styles.buttonLabel,
+                                selectedValue === value && styles.selectedLabel,
+                            ]}
+                        >
+                            {value}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
+    );
+
     return (
         <View style={{ backgroundColor: '#4A5156' }}>
             <View >
 
-                <Text style={styles.userName}>{props.data.username} </Text>
+                <Text style={styles.userName}>{route.params.username} </Text>
 
                 <View style={styles.row}>
 
@@ -55,9 +133,9 @@ export default function UserProfile(props) {
                     ></PreviewLayout>
 
                     <View style={styles.columm}>
-                        <Text style={styles.followingCount}>{props.data.seguidos.length} </Text>
+                        <Text style={styles.followingCount}>{route.params.seguidos.length} </Text>
                         <Text style={styles.TextFollow}> Seguidos</Text>
-                        <Text style={styles.followingCount}>{props.data.seguidores.length} </Text>
+                        <Text style={styles.followingCount}>{route.params.seguidores.length} </Text>
                         <Text style={styles.TextFollow}> Seguidores</Text>
 
                     </View>
@@ -77,67 +155,6 @@ export default function UserProfile(props) {
         </View>
     );
 }
-
-
-const PreviewLayout = ({
-    value,
-    selectedValue,
-    setSelectedValue,
-
-}) => (
-    <View style={{ padding: 10, flex: 1 }}>
-        <View>
-            <TouchableOpacity
-                key={value}
-                onPress={() => { setSelectedValue() }}
-                style={[
-                    styles.button,
-                    selectedValue === value && styles.selected,
-                ]}
-            >
-                <Text
-                    style={[
-                        styles.followButton,
-                        selectedValue === value && styles.selectedLabel,
-                    ]}
-                >
-                    {value}
-                </Text>
-            </TouchableOpacity>
-
-        </View>
-    </View>
-)
-const PreviewLayoutListado = ({
-    values,
-    selectedValue,
-    setSelectedValue,
-
-}) => (
-    <View style={{ padding: 10, flex: 1 }}>
-        <View style={styles.row}>
-            {values.map((value) => (
-                <TouchableOpacity
-                    key={value}
-                    onPress={() => { setSelectedValue(value) }}
-                    style={[
-                        styles.button,
-                        selectedValue === value && styles.selected,
-                    ]}
-                >
-                    <Text
-                        style={[
-                            styles.buttonLabel,
-                            selectedValue === value && styles.selectedLabel,
-                        ]}
-                    >
-                        {value}
-                    </Text>
-                </TouchableOpacity>
-            ))}
-        </View>
-    </View>
-);
 
 const styles = StyleSheet.create({
     dataView: {

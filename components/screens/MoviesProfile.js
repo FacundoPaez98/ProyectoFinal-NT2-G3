@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Constants from 'expo-constants';
 import GlobalContext from '../global/context';
+import Review from "../Review";
 
-const URL = "http://localhost:3000/api/reviews/title-reviews/"
+const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/title-reviews/"
 
 
 
-export default function MovieProfile(props) {
+export default function MovieProfile({route}) {
     
     const [reviews, setReviews] = useState([]);
+    const { dataUsuario } = useContext(GlobalContext);
 
-    buscarApi();
-
-    async function buscarApi() {         //Me parece q estoy poniendo mal el endpoint, se supone q le mando el ID del titulo
+    async function buscarReviewsPelicula() {  
         let reqOption = {
             method: "GET",
         }
-        let urlApi = URL + "1" // props.data.id;  el 1 es para probar
+        let urlApi = URL + route.params.id;
         try{
             let data = await fetch(urlApi, reqOption).then(response => response.json());
             setReviews(data)
@@ -25,21 +25,22 @@ export default function MovieProfile(props) {
              alert("Error")
          }  
     }
- 
+
+    useEffect(() => {
+        buscarReviewsPelicula();
+    }, []);
+
     return (
-        <View >
+    <View style={{ backgroundColor: '#4A5156', flex: 2 }}>
+        <Text style={styles.titulo}>{route.params.titulo} </Text>
 
-        <Text style={styles.userName}>{props.data.titulo} </Text>
-
-        <View style={styles.row}>
-            <View style={styles.columm}>
-                {buscarApi()}
-                {
-                reviews.map(function(item) {   //eaca solo listaria las reviews (pero no estan cargadas en la base con el nombre del usuario)
-                    <Text style={item}>{item.texto}</Text>
-                })
-                }
-            </View>
+        <View>
+            {
+                reviews.length == 0 ?
+                <Text style={{ fontSize: 15, color: '#E2EAE9'}}>No hay reseñas!</Text>
+                :
+                <Review data={reviews}/>
+            }
         </View>
     </View >
     );
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         marginHorizontal: 16,
     },
-    userName: {
+    titulo: {
         paddingTop: Constants.statusBarHeight,
         textAlign: 'left',
         marginLeft: 20,
