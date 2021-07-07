@@ -1,13 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext }from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import InfoProfile from './InfoProfile';
 import ScrollViewMovies from './ScrollViewMovies';
-import GlobalContext from './global/context';
+import GlobalContext from './global/context/index';
+import Constants from 'expo-constants';
 
+function Test1(props) {
 
-
-export default function UserProfile(props) {
-
+    console.log(props.route.params.usuario.titulos)
     const [tabView, setTabView] = useState("Peliculas");
     
     const [follow, setFollow] = useState("");
@@ -32,7 +31,7 @@ export default function UserProfile(props) {
 
     function showData(value) {
         if (value === "Peliculas") {
-            return <ScrollViewMovies data = {props.data.titulos}/>
+            return  <ScrollViewMovies data = {props.route.params.usuario.titulos}/>
 
         } if (value === "Reseñas") {
             return <Text>Reseñas!</Text>
@@ -44,7 +43,7 @@ export default function UserProfile(props) {
         <View style={{ backgroundColor: '#4A5156' }}>
             <View >
 
-                <Text style={styles.userName}>{props.data.username} </Text>
+                <Text style={styles.userName}>{props.route.params.usuario.username}</Text>
 
                 <View style={styles.row}>
 
@@ -55,9 +54,9 @@ export default function UserProfile(props) {
                     ></PreviewLayout>
 
                     <View style={styles.columm}>
-                        <Text style={styles.followingCount}>{props.data.seguidos.length} </Text>
+                        <Text style={styles.followingCount}>{props.route.params.usuario.seguidos.length} </Text>
                         <Text style={styles.TextFollow}> Seguidos</Text>
-                        <Text style={styles.followingCount}>{props.data.seguidores.length} </Text>
+                        <Text style={styles.followingCount}>{props.route.params.usuario.seguidores.length} </Text>
                         <Text style={styles.TextFollow}> Seguidores</Text>
 
                     </View>
@@ -121,7 +120,7 @@ const PreviewLayoutListado = ({
                     key={value}
                     onPress={() => { setSelectedValue(value) }}
                     style={[
-                        styles.button,
+                        styles.buttonList,
                         selectedValue === value && styles.selected,
                     ]}
                 >
@@ -141,16 +140,43 @@ const PreviewLayoutListado = ({
 
 const styles = StyleSheet.create({
     dataView: {
+        justifyContent: "center",
+        alignItems: 'center',
         flexGrow: 0,
-        marginTop: '18%',
-        marginBottom: '125%'
+        marginTop: '0%',
+        marginBottom: '0%'
     },
     row: {
-        flexDirection: "row",
+        flexDirection: 'row',
         flexWrap: "wrap",
-        marginTop: 20,
     },
-    button: {
+    columm: {
+        flexDirection: "column",
+        flexWrap: "wrap",
+    },
+    userName: {
+        paddingTop: Constants.statusBarHeight,
+        textAlign: 'left',
+        marginLeft: 20,
+        fontSize: 28,
+        color: "white",
+        fontWeight: "bold"
+    },
+    followingCount: {
+        alignItems: 'center',
+        paddingHorizontal: "13%",
+        textAlign: "center",
+        color: "white",
+        paddingTop: 10,
+        fontWeight: "bold"
+    },
+    TextFollow: {
+        alignItems: 'center',
+        textAlign: "center",
+        color: "white",
+        fontWeight: "300"
+    },
+    buttonList: {
         height: 40,
         paddingHorizontal: 6,
         paddingVertical: 6,
@@ -162,9 +188,21 @@ const styles = StyleSheet.create({
         minWidth: "48%",
         textAlign: "center",
     },
-    selected: { //Color del boton seleccionado
+    button: {
+        width: 100,
+        height: 100,
+        borderRadius: 100,
+        alignSelf: 'flex-start',
+        justifyContent: 'center',
+        textAlign: "center",
+    },
+    selected: {
         backgroundColor: "lightblue",
         borderWidth: 0,
+    },
+    selectedLabel: { // Color del texto
+        color: "black",
+        textAlign: "center",
     },
     buttonLabel: {
         textAlign: 'center',
@@ -172,7 +210,6 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         color: "grey",
     },
-    selectedLabel: { // Color del texto
-        color: "black",
-    },
+
 });
+export default Test1;

@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, StatusBar } from 'react-native';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import SearchUser from "./SearchUser"
 import SearchMovie from "./SearchMovie"
 
 const Tab = createMaterialTopTabNavigator();
 
-function Search() {
+function SearchTabs() {
 
     return (
         <Tab.Navigator
@@ -18,6 +16,7 @@ function Search() {
                 keyboardHidesTabBar: true,
                 style: {
                     padding: 10,
+                    marginTop: 20,
                     backgroundColor: '#4A5156',
                     borderTopColor: '#111112',
                 },
@@ -27,13 +26,7 @@ function Search() {
             <Tab.Screen name="Pelicula" component={SearchMovie} />
 
         </Tab.Navigator>
-
     );
 }
 
-const styles = StyleSheet.create({
-
-
-});
-
-export default Search;
+export default SearchTabs;

@@ -19,9 +19,8 @@ const Item = ({ title, anio, foto }) => (
 
 function ScrollViewMovies(props) {
 
-    function x() {
-        alert("redirigiendo al perfil de la pelicula...")
-        //RootNavigation.navigate("Inicio");
+    function navigateMovieProfile(pelicula) {
+        RootNavigation.navigate("PerfilPelicula", pelicula);
     }
 
     return (
@@ -30,14 +29,14 @@ function ScrollViewMovies(props) {
                 props.data.map(function (item) {
                     if (item.foto != null) {
                         return (
-                            <TouchableOpacity onPress={x} key={item.id}>
+                            <TouchableOpacity onPress={() => navigateMovieProfile(item)} key={item.id}>
                                 <Item title={item.titulo} anio={item.anio} foto={item.foto.imageUrl} />
                             </TouchableOpacity>
                         )
                     }
                     else {
                         return (
-                            <TouchableOpacity onPress={() => alert("redirigiendo al perfil de la pelicula...")} key={item.id}>
+                            <TouchableOpacity onPress={() => navigateMovieProfile(item)} key={item.id}>
                                 <Item title={item.titulo} anio={item.anio} />
                             </TouchableOpacity>
                         )
@@ -65,7 +64,6 @@ const styles = StyleSheet.create({
         color: '#E2EAE9',
     },
     logo: {
-
         flexDirection: "row",
         width: 100,
         height: 150,

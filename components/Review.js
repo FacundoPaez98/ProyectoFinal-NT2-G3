@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Resenias;
+export default Review;

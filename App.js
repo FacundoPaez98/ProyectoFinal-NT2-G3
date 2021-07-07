@@ -1,17 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useContext, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign } from "@expo/vector-icons";
-import Home from "./components/Home";
-import Search from "./components/Search";
-import Profile from "./components/Profile";
-import Logout from './components/Logout';
+import Home from "./components/screens/Home";
+import Search from "./components/screens/Search";
+import Profile from "./components/screens/Profile";
+import Logout from './components/screens/Logout';
 import Login from "./components/Login";
 import GlobalContext from "./components/global/context";
 import { navigationRef } from './utils/RootNavigation';
-import MovieProfile from './components/MoviesProfile';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +24,7 @@ const MyTheme = {
 export default function App() {
 
   const dataUsuario = useContext(GlobalContext);
-  const [authenticated, setAuthenticated] = useState(false)
+  const [authenticated, setAuthenticated] = useState(true)
 
   return (
     <GlobalContext.Provider value={{ dataUsuario, setAuthenticated }}>
@@ -75,13 +73,3 @@ export default function App() {
 
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-
-});

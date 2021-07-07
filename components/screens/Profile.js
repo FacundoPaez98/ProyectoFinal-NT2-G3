@@ -1,9 +1,9 @@
 
 import React, { useContext, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import InfoProfile from './InfoProfile';
-import ScrollViewMovies from './ScrollViewMovies';
-import GlobalContext from './global/context';
+import InfoProfile from '../InfoProfile';
+import ScrollViewMovies from '../ScrollViewMovies';
+import GlobalContext from '../global/context';
 
 
 
@@ -55,7 +55,7 @@ const PreviewLayout = ({
                     key={value}
                     onPress={() => { setSelectedValue(value) }}
                     style={[
-                        styles.button,
+                        styles.buttonList,
                         selectedValue === value && styles.selected,
                     ]}
                 >
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         marginTop: 20,
     },
-    button: {
+    buttonList: {
         height: 40,
         paddingHorizontal: 6,
         paddingVertical: 6,
