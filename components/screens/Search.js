@@ -24,7 +24,7 @@ function Search() {
                 component={UserProfile}
                 />
                 <SearchStack.Screen 
-                name="PerfilPelicula" 
+                name="PerfilPelicula"
                 component={MovieProfile}
                 />
             </SearchStack.Navigator>
