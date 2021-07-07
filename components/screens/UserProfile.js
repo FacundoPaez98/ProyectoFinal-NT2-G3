@@ -1,16 +1,36 @@
-import React, { useState, useContext }from 'react';
+import React, { useState, useContext, useEffect }from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ScrollViewMovies from '../ScrollViewMovies';
 import GlobalContext from '../global/context/index';
 import Constants from 'expo-constants';
+import Review from '../Review';
 
-function UserProfile(props) {
+const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/user-reviews/";
 
-    console.log(props.route.params.usuario.titulos)
+function UserProfile({route}) {
+
     const [tabView, setTabView] = useState("Peliculas");
-    
+    const [reviews, setReviews] = useState([]);
     const [follow, setFollow] = useState("");
     const { dataUsuario } = useContext(GlobalContext);
+
+    async function buscarReviewsUsuario() {  
+        let reqOption = {
+            method: "GET",
+        }
+        let urlApi = URL + route.params._id;
+        try{
+            let data = await fetch(urlApi, reqOption).then(response => response.json());
+            setReviews(data)
+         }catch(e){
+             alert("Error")
+         }  
+    }
+
+    useEffect(() => {
+        buscarReviewsUsuario();
+        //isFollowing();
+    }, []);
 
     function changeFollowButtom() {
         if (follow == "Seguir") {
@@ -30,35 +50,98 @@ function UserProfile(props) {
 
     function showData(value) {
         if (value === "Peliculas") {
-            if (props.route.params.usuario.tituloslength == 0) {
+            if (route.params.tituloslength == 0) {
                 return <Text style={{ fontSize: 15, color: '#E2EAE9' }}>No hay titulos!</Text>
             } else {
-            return  <ScrollViewMovies data = {props.route.params.usuario.titulos}/>
+            return  <ScrollViewMovies data = {route.params.titulos}/>
             }
         } if (value === "Reseñas") {
-            return <Text>Reseñas!</Text>
+            if(reviews.length == 0){
+                return <Text style={{ fontSize: 15, color: '#E2EAE9' }}>Este usuario no tiene reseñas.</Text>
+            } else {
+                return <Review data = {reviews}/>
+            }
+            
 
         }
     }
 
-    return (
-        <View style={{ backgroundColor: '#4A5156' }}>
-            <View >
+    const PreviewLayout = ({
+        value,
+        selectedValue,
+        setSelectedValue,
+    
+    }) => (
+        <View style={{ padding: 10, flex: 1 }}>
+            <View>
+                <TouchableOpacity
+                    key={value}
+                    onPress={() => { setSelectedValue() }}
+                    style={[
+                        styles.button,
+                        selectedValue === value && styles.selected,
+                    ]}
+                >
+                    <Text
+                        style={[
+                            styles.followButton,
+                            selectedValue === value && styles.selectedLabel,
+                        ]}
+                    >
+                        {value}
+                    </Text>
+                </TouchableOpacity>
+    
+            </View>
+        </View>
+    )
+    const PreviewLayoutListado = ({
+        values,
+        selectedValue,
+        setSelectedValue,
+    
+    }) => (
+        <View style={{ padding: 10, flex: 1 }}>
+            <View style={styles.row}>
+                {values.map((value) => (
+                    <TouchableOpacity
+                        key={value}
+                        onPress={() => { setSelectedValue(value) }}
+                        style={[
+                            styles.buttonList,
+                            selectedValue === value && styles.selected,
+                        ]}
+                    >
+                        <Text
+                            style={[
+                                styles.buttonLabel,
+                                selectedValue === value && styles.selectedLabel,
+                            ]}
+                        >
+                            {value}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
+    );
 
-                <Text style={styles.userName}>{props.route.params.usuario.username}</Text>
+    return (
+        <View style={{ backgroundColor: '#4A5156', flex: 2  }}>
+            <View >
+                <Text style={styles.userName}>{route.params.username}</Text>
 
                 <View style={styles.row}>
-
                     <PreviewLayout
                         value={follow}
                         selectedValue={follow}
                         setSelectedValue={changeFollowButtom}
-                    ></PreviewLayout>
+                    />
 
                     <View style={styles.columm}>
-                        <Text style={styles.followingCount}>{props.route.params.usuario.seguidos.length} </Text>
+                        <Text style={styles.followingCount}>{route.params.seguidos.length} </Text>
                         <Text style={styles.TextFollow}> Seguidos</Text>
-                        <Text style={styles.followingCount}>{props.route.params.usuario.seguidores.length} </Text>
+                        <Text style={styles.followingCount}>{route.params.seguidores.length} </Text>
                         <Text style={styles.TextFollow}> Seguidores</Text>
 
                     </View>
@@ -68,77 +151,15 @@ function UserProfile(props) {
                 values={["Peliculas", "Reseñas"]}
                 selectedValue={tabView}
                 setSelectedValue={setTabView}
-            >
-            </PreviewLayoutListado>
+            />
 
-            <View style={styles.dataView}>
+            <View style={styles.dataView, {flex: 4}}>
                 {showData(tabView)}
             </View>
 
         </View>
     );
 }
-
-
-const PreviewLayout = ({
-    value,
-    selectedValue,
-    setSelectedValue,
-
-}) => (
-    <View style={{ padding: 10, flex: 1 }}>
-        <View>
-            <TouchableOpacity
-                key={value}
-                onPress={() => { setSelectedValue() }}
-                style={[
-                    styles.button,
-                    selectedValue === value && styles.selected,
-                ]}
-            >
-                <Text
-                    style={[
-                        styles.followButton,
-                        selectedValue === value && styles.selectedLabel,
-                    ]}
-                >
-                    {value}
-                </Text>
-            </TouchableOpacity>
-
-        </View>
-    </View>
-)
-const PreviewLayoutListado = ({
-    values,
-    selectedValue,
-    setSelectedValue,
-
-}) => (
-    <View style={{ padding: 10, flex: 1 }}>
-        <View style={styles.row}>
-            {values.map((value) => (
-                <TouchableOpacity
-                    key={value}
-                    onPress={() => { setSelectedValue(value) }}
-                    style={[
-                        styles.buttonList,
-                        selectedValue === value && styles.selected,
-                    ]}
-                >
-                    <Text
-                        style={[
-                            styles.buttonLabel,
-                            selectedValue === value && styles.selectedLabel,
-                        ]}
-                    >
-                        {value}
-                    </Text>
-                </TouchableOpacity>
-            ))}
-        </View>
-    </View>
-);
 
 const styles = StyleSheet.create({
     dataView: {
@@ -170,13 +191,14 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: "white",
         paddingTop: 10,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     TextFollow: {
         alignItems: 'center',
         textAlign: "center",
         color: "white",
-        fontWeight: "300"
+        fontWeight: "300",
+        paddingRight: 10
     },
     buttonList: {
         height: 40,

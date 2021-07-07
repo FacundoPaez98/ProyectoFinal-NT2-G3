@@ -1,36 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
 import Constants from 'expo-constants';
+import Review from "../Review";
+import GlobalContext from '../global/context';
 
-const URL = "https://obscure-thicket-15756.herokuapp.com/reviews/title-reviews/"
+const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/title-reviews/"
 const noImage = "https://thumbs.dreamstime.com/b/no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpg";
 
 
-export default function MovieProfile(props) {
+export default function MovieProfile({route}) {
 
 
     const [tabView, setTabView] = useState("Reviews");
-    //const [reviews, setReviews] = useState([]);
-
-
-    async function buscarApi() {
+    const [reviews, setReviews] = useState([]);
+    const { dataUsuario } = useContext(GlobalContext);
+ 
+    async function buscarReviewsPelicula() {
         let reqOption = {
             method: "GET",
         }
-        let urlApi = URL + "1" // props.route.params.tituloId;  el 1 es para probar
+        let urlApi = URL + route.params.id;
         try {
             let data = await fetch(urlApi, reqOption).then(response => response.json());
-            //setReviews(data)
+            setReviews(data)
         } catch (e) {
             alert("Error")
         }
     }
     function showData(value) {
         if (value === "Reviews") {
-            if (true) { //validar si tiene reseñas
-                return <Text style={{ fontSize: 15, color: '#E2EAE9' }}>No hay reviews!</Text>
+            if (reviews.length == 0) { 
+                return <Text style={{ fontSize: 15, color: '#E2EAE9' }}>No hay reseñas!</Text>
             } else {
-                return //scrollviewreviews
+                return <Review data={reviews}/>
             }
 
         } if (value === "Tu Reseña") {
@@ -39,14 +41,48 @@ export default function MovieProfile(props) {
         }
     }
 
-    console.log(props.route.params.foto.imageUrl)
+    useEffect(() => {
+        buscarReviewsPelicula();
+    }, []);
+
+    const PreviewLayout = ({
+        values,
+        selectedValue,
+        setSelectedValue,
+    
+    }) => (
+        <View style={{ padding: 10 }}>
+            <View style={styles.row}>
+                {values.map((value) => (
+                    <TouchableOpacity
+                        key={value}
+                        onPress={() => { setSelectedValue(value) }}
+                        style={[
+                            styles.buttonList,
+                            selectedValue === value && styles.selected,
+                        ]}
+                    >
+                        <Text
+                            style={[
+                                styles.buttonLabel,
+                                selectedValue === value && styles.selectedLabel,
+                            ]}
+                        >
+                            {value}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
+    );
+
     return (
         <View style={{ backgroundColor: '#4A5156' }}>
             <View style={styles.item}>
-            <Text style={styles.userName}>{props.route.params.titulo} </Text>
+            <Text style={styles.titulo}>{route.params.titulo} </Text>
             {
-                (props.route.params.foto.imageUrl) ?
-                    <Image style={styles.logo} source={{ uri: props.route.params.foto.imageUrl }}></Image>
+                (route.params.foto.imageUrl) ?
+                    <Image style={styles.logo} source={{ uri: route.params.foto.imageUrl }}></Image>
                     :
                     <Image style={styles.logo} source={{ uri: noImage }}></Image>
             }
@@ -56,47 +92,15 @@ export default function MovieProfile(props) {
                 selectedValue={tabView}
                 setSelectedValue={setTabView}
             />
-            <View style={styles.dataView, { flex: 4 }}>
+            <View style={styles.dataView}>
                 {showData(tabView)}
             </View>
         </View>
     );
 }
 
-
-const PreviewLayout = ({
-    values,
-    selectedValue,
-    setSelectedValue,
-
-}) => (
-    <View style={{ padding: 10 }}>
-        <View style={styles.row}>
-            {values.map((value) => (
-                <TouchableOpacity
-                    key={value}
-                    onPress={() => { setSelectedValue(value) }}
-                    style={[
-                        styles.buttonList,
-                        selectedValue === value && styles.selected,
-                    ]}
-                >
-                    <Text
-                        style={[
-                            styles.buttonLabel,
-                            selectedValue === value && styles.selectedLabel,
-                        ]}
-                    >
-                        {value}
-                    </Text>
-                </TouchableOpacity>
-            ))}
-        </View>
-    </View>
-);
-
 const styles = StyleSheet.create({
-    userName: {
+    titulo: {
         paddingTop: Constants.statusBarHeight,
         textAlign: 'center',
         marginLeft: 20,
