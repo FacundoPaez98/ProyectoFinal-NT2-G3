@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
         color: '#E2EAE9',
     },
     logo: {
-
         flexDirection: "row",
         width: 100,
         height: 150,

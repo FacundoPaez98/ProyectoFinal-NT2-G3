@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import SearchTabs from './SearchTabs';
-import Test1 from '../Test1';
-import Test2 from '../Test2';
+import UserProfile from './UserProfile';
+import MovieProfile from './MoviesProfile';
 
 const SearchStack = createStackNavigator();
 
@@ -20,11 +20,11 @@ function Search() {
                 />
                 <SearchStack.Screen 
                 name="PerfilUsuario" 
-                component={Test1}
+                component={UserProfile}
                 />
                 <SearchStack.Screen 
                 name="PerfilPelicula" 
-                component={Test2}
+                component={MovieProfile}
                 />
             </SearchStack.Navigator>
     );

@@ -11,7 +11,7 @@ const Item = ({ username }) => (
 function ScrollViewUser (props) {
 
     function navigateUserProfile(usuario) {
-        RootNavigation.navigate("PerfilUsuario");
+        RootNavigation.navigate("PerfilUsuario", {usuario});
     }
 
     return (
