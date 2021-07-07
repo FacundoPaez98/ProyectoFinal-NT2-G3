@@ -1,4 +1,3 @@
-
 import React, { useContext, useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import InfoProfile from '../InfoProfile';
@@ -63,7 +62,7 @@ export default function Profile() {
                         key={value}
                         onPress={() => { setSelectedValue(value) }}
                         style={[
-                            styles.button,
+                            styles.buttonList,
                             selectedValue === value && styles.selected,
                         ]}
                     >
