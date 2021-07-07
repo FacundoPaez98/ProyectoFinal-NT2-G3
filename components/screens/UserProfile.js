@@ -55,6 +55,7 @@ function UserProfile({route}) {
             } else {
             return  <ScrollViewMovies data = {route.params.titulos}/>
             }
+            
         } if (value === "Reseñas") {
             if(reviews.length == 0){
                 return <Text style={{ fontSize: 15, color: '#E2EAE9' }}>Este usuario no tiene reseñas.</Text>
@@ -62,7 +63,6 @@ function UserProfile({route}) {
                 return <Review data = {reviews}/>
             }
             
-
         }
     }
 

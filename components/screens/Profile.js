@@ -1,13 +1,34 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import InfoProfile from '../InfoProfile';
 import ScrollViewMovies from '../ScrollViewMovies';
 import GlobalContext from '../global/context';
+import Review from "../Review";
+
+const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/user-reviews/";
 
 export default function Profile() {
     const [tabView, setTabView] = useState("Peliculas");
-
+    const [reviews, setReviews] = useState([]);
     const { dataUsuario } = useContext(GlobalContext);
+
+    async function buscarReviewsUsuario() {  
+        let reqOption = {
+            method: "GET",
+        }
+
+        let urlApi = URL + dataUsuario.usuario._id;
+        try{
+            let data = await fetch(urlApi, reqOption).then(response => response.json());
+            setReviews(data)
+         }catch(e){
+             alert("Error")
+         }  
+    }
+
+    useEffect(() => {
+        buscarReviewsUsuario();
+    }, []);
 
     function showData(value) {
         if (value === "Peliculas") {
@@ -17,9 +38,14 @@ export default function Profile() {
                 return <ScrollViewMovies data={dataUsuario.usuario.titulos} />
             }
 
-        } if (value === "Reseñas") {
-            return <Text style={{ fontSize: 15, color: '#E2EAE9'}}>Reseñas!</Text>
-
+        } 
+        
+        if (value === "Reseñas") {
+            if (reviews.length == 0){
+                return <Text style={{ fontSize: 15, color: '#E2EAE9'}}>No hay reseñas!</Text>
+            }   else {
+                return <Review data={reviews}/>
+            }
         }
     }
 

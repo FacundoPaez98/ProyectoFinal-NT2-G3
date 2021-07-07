@@ -4,6 +4,7 @@ import SearchTabs from './SearchTabs';
 import UserProfile from './UserProfile';
 import MovieProfile from './MoviesProfile';
 
+
 const SearchStack = createStackNavigator();
 
 function Search() {

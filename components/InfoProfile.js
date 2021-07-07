@@ -6,10 +6,9 @@ import GlobalContext from './global/context';
 export default function infoProfile() {
 
     const { dataUsuario } = useContext(GlobalContext);
-    
+
     return (
         <View >
-
             <Text style={styles.userName}>{dataUsuario.usuario.username} </Text>
 
             <View style={styles.row}>
