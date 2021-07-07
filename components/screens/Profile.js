@@ -1,16 +1,35 @@
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import InfoProfile from '../InfoProfile';
 import ScrollViewMovies from '../ScrollViewMovies';
 import GlobalContext from '../global/context';
+import Review from "../Review";
 
-
+const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/user-reviews/";
 
 export default function Profile() {
     const [tabView, setTabView] = useState("Peliculas");
-
+    const [reviews, setReviews] = useState([]);
     const { dataUsuario } = useContext(GlobalContext);
+
+    async function buscarReviewsUsuario() {  
+        let reqOption = {
+            method: "GET",
+        }
+
+        let urlApi = URL + dataUsuario.usuario._id;
+        try{
+            let data = await fetch(urlApi, reqOption).then(response => response.json());
+            setReviews(data)
+         }catch(e){
+             alert("Error")
+         }  
+    }
+
+    useEffect(() => {
+        buscarReviewsUsuario();
+    }, []);
 
     function showData(value) {
         if (value === "Peliculas") {
@@ -20,11 +39,47 @@ export default function Profile() {
                 return <ScrollViewMovies data={dataUsuario.usuario.titulos} />
             }
 
-        } if (value === "Reseñas") {
-            return <Text style={{ fontSize: 15, color: '#E2EAE9'}}>Reseñas!</Text>
-
+        } 
+        
+        if (value === "Reseñas") {
+            if (reviews.length == 0){
+                return <Text style={{ fontSize: 15, color: '#E2EAE9'}}>No hay reseñas!</Text>
+            }   else {
+                return <Review data={reviews}/>
+            }
         }
     }
+
+    const PreviewLayout = ({
+        values,
+        selectedValue,
+        setSelectedValue,
+    
+    }) => (
+        <View style={{ padding: 10}}>
+            <View style={styles.row}>
+                {values.map((value) => (
+                    <TouchableOpacity
+                        key={value}
+                        onPress={() => { setSelectedValue(value) }}
+                        style={[
+                            styles.button,
+                            selectedValue === value && styles.selected,
+                        ]}
+                    >
+                        <Text
+                            style={[
+                                styles.buttonLabel,
+                                selectedValue === value && styles.selectedLabel,
+                            ]}
+                        >
+                            {value}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
+    );
 
     return (
         <View style={{ backgroundColor: '#4A5156', flex: 2 }}>
@@ -40,38 +95,6 @@ export default function Profile() {
         </View>
     );
 }
-
-
-const PreviewLayout = ({
-    values,
-    selectedValue,
-    setSelectedValue,
-
-}) => (
-    <View style={{ padding: 10}}>
-        <View style={styles.row}>
-            {values.map((value) => (
-                <TouchableOpacity
-                    key={value}
-                    onPress={() => { setSelectedValue(value) }}
-                    style={[
-                        styles.buttonList,
-                        selectedValue === value && styles.selected,
-                    ]}
-                >
-                    <Text
-                        style={[
-                            styles.buttonLabel,
-                            selectedValue === value && styles.selectedLabel,
-                        ]}
-                    >
-                        {value}
-                    </Text>
-                </TouchableOpacity>
-            ))}
-        </View>
-    </View>
-);
 
 const styles = StyleSheet.create({
     dataView: {

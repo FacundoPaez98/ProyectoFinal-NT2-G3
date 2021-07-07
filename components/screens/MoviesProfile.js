@@ -3,13 +3,12 @@ import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
 import Constants from 'expo-constants';
 import Review from "../Review";
 import GlobalContext from '../global/context';
+import Review from "../Review";
 
 const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/title-reviews/"
 const noImage = "https://thumbs.dreamstime.com/b/no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpg";
 
-
 export default function MovieProfile({route}) {
-
 
     const [tabView, setTabView] = useState("Reviews");
     const [reviews, setReviews] = useState([]);
@@ -100,6 +99,15 @@ export default function MovieProfile({route}) {
 }
 
 const styles = StyleSheet.create({
+    item: {
+        alignItems: "center",
+        flex:1,
+        flexDirection: "column",
+        backgroundColor: '#676C6F',
+        padding: 10,
+        marginVertical: 8,
+        marginHorizontal: 16,
+    },
     titulo: {
         paddingTop: Constants.statusBarHeight,
         textAlign: 'center',
