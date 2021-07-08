@@ -5,7 +5,9 @@ import GlobalContext from '../global/context/index';
 import Constants from 'expo-constants';
 import Review from '../Review';
 
-const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/user-reviews/";
+const URL_REVIEWS = "https://obscure-thicket-15756.herokuapp.com/api/reviews/user-reviews/";
+const URL_FOLLOW = "https://obscure-thicket-15756.herokuapp.com/usuario/follow/";
+const URL_UNFOLLOW = "https://obscure-thicket-15756.herokuapp.com/usuario/unfollow/";
 
 function UserProfile({route}) {
 
@@ -18,7 +20,7 @@ function UserProfile({route}) {
         let reqOption = {
             method: "GET",
         }
-        let urlApi = URL + route.params._id;
+        let urlApi = URL_REVIEWS + route.params._id;
         try{
             let data = await fetch(urlApi, reqOption).then(response => response.json());
             setReviews(data)
@@ -27,22 +29,54 @@ function UserProfile({route}) {
          }  
     }
 
+    async function followUser(){
+        let headers = new Headers();
+        headers.append("Content-type", "application/json");
+        let reqOption = {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({_id:route.params._id, username:route.params.username, titulos:route.params.titulos})
+        }
+        let urlApi = URL_FOLLOW + dataUsuario.usuario._id;
+        try{
+            await fetch(urlApi, reqOption).then(response => response.json());
+         }catch(e){
+             alert("Error")
+         } 
+    }
+
+    async function unfollowUser(){
+        let reqOption = {
+            method: "PUT",
+        }
+        let urlApi = URL_UNFOLLOW + dataUsuario.usuario._id + "/" + route.params._id;
+        try{
+            await fetch(urlApi, reqOption).then(response => response.json());
+         }catch(e){
+             alert("Error")
+         }  
+    }
+
     useEffect(() => {
         buscarReviewsUsuario();
-        //isFollowing();
+        isFollowing();
     }, []);
 
     function changeFollowButtom() {
         if (follow == "Seguir") {
-            setFollow("Siguiendo")
+            followUser();
+            setFollow("Dejar de seguir");
         } else {
-            setFollow("Seguir")
+            unfollowUser();
+            setFollow("Seguir");
         }
     }
 
-    function isFollowing() {  //validar con el context si ya se lo sigue o no y q se ejecute ni bien se carga la vista
-        if (true) {
-            setFollow("Siguiendo");
+    function isFollowing() {
+        const yaSiguiendo = dataUsuario.usuario.seguidos.find(user => user._id == route.params._id);
+
+        if (yaSiguiendo) {
+            setFollow("Dejar de seguir");
         } else {
             setFollow("Seguir");
         }
@@ -50,7 +84,7 @@ function UserProfile({route}) {
 
     function showData(value) {
         if (value === "Peliculas") {
-            if (route.params.tituloslength == 0) {
+            if (route.params.titulos.length == 0) {
                 return <Text style={{ fontSize: 15, color: '#E2EAE9' }}>No hay titulos!</Text>
             } else {
             return  <ScrollViewMovies data = {route.params.titulos}/>
