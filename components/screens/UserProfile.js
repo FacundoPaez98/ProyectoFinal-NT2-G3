@@ -15,6 +15,9 @@ function UserProfile({route}) {
     const [reviews, setReviews] = useState([]);
     const [follow, setFollow] = useState("");
     const { dataUsuario } = useContext(GlobalContext);
+    const [seguidores, setSeguidor] = useState(route.params.seguidores.length);
+
+    const sumador = 1;
 
     async function buscarReviewsUsuario() {  
         let reqOption = {
@@ -62,13 +65,17 @@ function UserProfile({route}) {
         isFollowing();
     }, []);
 
+
+
     function changeFollowButtom() {
         if (follow == "Seguir") {
             followUser();
             setFollow("Dejar de seguir");
+            setSeguidor(seguidores + sumador)
         } else {
             unfollowUser();
             setFollow("Seguir");
+            setSeguidor(seguidores - sumador)
         }
     }
 
@@ -175,7 +182,7 @@ function UserProfile({route}) {
                     <View style={styles.columm}>
                         <Text style={styles.followingCount}>{route.params.seguidos.length} </Text>
                         <Text style={styles.TextFollow}> Seguidos</Text>
-                        <Text style={styles.followingCount}>{route.params.seguidores.length} </Text>
+                        <Text style={styles.followingCount}>{seguidores} </Text>
                         <Text style={styles.TextFollow}> Seguidores</Text>
 
                     </View>
