@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
 import Constants from 'expo-constants';
 import Review from "../Review";
 import GlobalContext from '../global/context';
+import AddReview from "../AddReview";
 
 const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/title-reviews/"
 const noImage = "https://thumbs.dreamstime.com/b/no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpg";
@@ -12,6 +13,7 @@ export default function MovieProfile({route}) {
     const [tabView, setTabView] = useState("Reviews");
     const [reviews, setReviews] = useState([]);
     const { dataUsuario } = useContext(GlobalContext);
+    const [addBoton, setBoton] = useState("+");
  
     async function buscarReviewsPelicula() {
         let reqOption = {
@@ -34,7 +36,7 @@ export default function MovieProfile({route}) {
             }
 
         } if (value === "Tu Reseña") {
-            return <Text style={{ fontSize: 15, color: '#E2EAE9' }}>Hace tu review!!</Text>
+            return <AddReview/>
 
         }
     }
@@ -42,6 +44,14 @@ export default function MovieProfile({route}) {
     useEffect(() => {
         buscarReviewsPelicula();
     }, []);
+
+    function changeAddButtom() {
+        if (addBoton == "+") {
+            setBoton("-");
+        } else {
+            setBoton("+");
+        }
+    }
 
     const PreviewLayout = ({
         values,
@@ -74,6 +84,35 @@ export default function MovieProfile({route}) {
         </View>
     );
 
+    const PreviewLayoutBoton = ({
+        value,
+        selectedValue,
+        setSelectedValue,
+    
+    }) => (
+        <View style={{ padding: 10, flex: 1 }}>
+            <View>
+                <TouchableOpacity
+                    key={value}
+                    onPress={() => { setSelectedValue() }}
+                    style={[
+                        styles.button,
+                        selectedValue === value && styles.selected,
+                    ]}
+                >
+                    <Text
+                        style={[
+                            {fontSize: 50},
+                            selectedValue === value && styles.selectedLabel,
+                        ]}
+                    >
+                        {value}
+                    </Text>
+                </TouchableOpacity>
+    
+            </View>
+        </View>
+    )
     return (
         <View style={{ backgroundColor: '#4A5156' }}>
             <View style={styles.item}>
@@ -84,6 +123,11 @@ export default function MovieProfile({route}) {
                     :
                     <Image style={styles.logo} source={{ uri: noImage }}></Image>
             }
+            <PreviewLayoutBoton
+                        value={addBoton}
+                        selectedValue={addBoton}
+                        setSelectedValue={changeAddButtom}
+                    />
             </View>
             <PreviewLayout
                 values={["Reviews", "Tu Reseña"]}
@@ -154,5 +198,13 @@ const styles = StyleSheet.create({
         padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
+    },
+    button: {
+        width: 60,
+        height: 60,
+        borderRadius: 100,
+        alignSelf: 'flex-start',
+        justifyContent: 'center',
+        textAlign: "center",
     },
 });
