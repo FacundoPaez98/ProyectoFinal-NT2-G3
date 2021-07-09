@@ -15,9 +15,7 @@ function UserProfile({route}) {
     const [reviews, setReviews] = useState([]);
     const [follow, setFollow] = useState("");
     const { dataUsuario } = useContext(GlobalContext);
-    const [seguidores, setSeguidor] = useState(route.params.seguidores.length);
-
-    const sumador = 1;
+    const [seguidores, setSeguidores] = useState(route.params.seguidores.length);
 
     async function buscarReviewsUsuario() {  
         let reqOption = {
@@ -42,7 +40,9 @@ function UserProfile({route}) {
         }
         let urlApi = URL_FOLLOW + dataUsuario.usuario._id;
         try{
-            await fetch(urlApi, reqOption).then(response => response.json());
+            let data = await fetch(urlApi, reqOption).then(response => response.json());
+            updateContext(data);
+            setSeguidores(prev => prev + 1);
          }catch(e){
              alert("Error")
          } 
@@ -54,10 +54,16 @@ function UserProfile({route}) {
         }
         let urlApi = URL_UNFOLLOW + dataUsuario.usuario._id + "/" + route.params._id;
         try{
-            await fetch(urlApi, reqOption).then(response => response.json());
+            let data = await fetch(urlApi, reqOption).then(response => response.json());
+            updateContext(data);
+            setSeguidores(prev => prev - 1);
          }catch(e){
              alert("Error")
          }  
+    }
+
+    function updateContext(data){
+        dataUsuario.usuario.seguidos = data.seguidos;
     }
 
     useEffect(() => {
@@ -71,11 +77,9 @@ function UserProfile({route}) {
         if (follow == "Seguir") {
             followUser();
             setFollow("Dejar de seguir");
-            setSeguidor(seguidores + sumador)
         } else {
             unfollowUser();
             setFollow("Seguir");
-            setSeguidor(seguidores - sumador)
         }
     }
 
