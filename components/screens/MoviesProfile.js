@@ -5,7 +5,9 @@ import Review from "../Review";
 import GlobalContext from '../global/context';
 import AddReview from "../AddReview";
 
-const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/title-reviews/"
+const URL_REVIEWS = "https://obscure-thicket-15756.herokuapp.com/api/reviews/title-reviews/"
+const URL_ADD_MOVIE = "https://obscure-thicket-15756.herokuapp.com/usuario/add-pelicula/";
+const URL_REMOVE_MOVIE = "https://obscure-thicket-15756.herokuapp.com/usuario/remove-pelicula/";
 const noImage = "https://thumbs.dreamstime.com/b/no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpg";
 
 export default function MovieProfile({route}) {
@@ -19,7 +21,7 @@ export default function MovieProfile({route}) {
         let reqOption = {
             method: "GET",
         }
-        let urlApi = URL + route.params.id;
+        let urlApi = URL_REVIEWS + route.params.id;
         try {
             let data = await fetch(urlApi, reqOption).then(response => response.json());
             setReviews(data)
@@ -27,6 +29,35 @@ export default function MovieProfile({route}) {
             alert("Error")
         }
     }
+
+    async function addMovie(){
+        let headers = new Headers();
+        headers.append("Content-type", "application/json");
+        let reqOption = {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({foto:route.params.foto, id:route.params.id, titulo:route.params.titulo, anio:route.params.anio})
+        }
+        let urlApi = URL_ADD_MOVIE + dataUsuario.usuario._id;
+        try{
+            await fetch(urlApi, reqOption).then(response => response.json());
+         }catch(e){
+             alert("Error")
+         } 
+    }
+
+    async function removeMovie(){
+        let reqOption = {
+            method: "PUT",
+        }
+        let urlApi = URL_REMOVE_MOVIE + dataUsuario.usuario._id + "/" + route.params.id;
+        try{
+            await fetch(urlApi, reqOption).then(response => response.json());
+         }catch(e){
+             alert("Error")
+         }  
+    }
+
     function showData(value) {
         if (value === "Reviews") {
             if (reviews.length == 0) { 
@@ -41,14 +72,27 @@ export default function MovieProfile({route}) {
         }
     }
 
+    function alreadyInList() {
+        const yaAgregada = dataUsuario.usuario.titulos.find(movie => movie.id == route.params.id);
+
+        if (yaAgregada) {
+            setBoton("-");
+        } else {
+            setBoton("+");
+        }
+    }
+
     useEffect(() => {
         buscarReviewsPelicula();
+        alreadyInList();
     }, []);
 
     function changeAddButtom() {
         if (addBoton == "+") {
+            addMovie();
             setBoton("-");
         } else {
+            removeMovie();
             setBoton("+");
         }
     }
