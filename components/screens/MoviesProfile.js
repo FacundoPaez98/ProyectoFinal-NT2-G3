@@ -3,8 +3,11 @@ import { StyleSheet, Text, TouchableOpacity, Image, View } from 'react-native';
 import Constants from 'expo-constants';
 import Review from "../Review";
 import GlobalContext from '../global/context';
+import AddReview from "../AddReview";
 
-const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/title-reviews/"
+const URL_REVIEWS = "https://obscure-thicket-15756.herokuapp.com/api/reviews/title-reviews/"
+const URL_ADD_MOVIE = "https://obscure-thicket-15756.herokuapp.com/usuario/add-pelicula/";
+const URL_REMOVE_MOVIE = "https://obscure-thicket-15756.herokuapp.com/usuario/remove-pelicula/";
 const noImage = "https://thumbs.dreamstime.com/b/no-image-available-icon-photo-camera-flat-vector-illustration-132483141.jpg";
 
 export default function MovieProfile({route}) {
@@ -12,12 +15,13 @@ export default function MovieProfile({route}) {
     const [tabView, setTabView] = useState("Reviews");
     const [reviews, setReviews] = useState([]);
     const { dataUsuario } = useContext(GlobalContext);
+    const [addBoton, setBoton] = useState("+");
  
     async function buscarReviewsPelicula() {
         let reqOption = {
             method: "GET",
         }
-        let urlApi = URL + route.params.id;
+        let urlApi = URL_REVIEWS + route.params.id;
         try {
             let data = await fetch(urlApi, reqOption).then(response => response.json());
             setReviews(data)
@@ -25,6 +29,35 @@ export default function MovieProfile({route}) {
             alert("Error")
         }
     }
+
+    async function addMovie(){
+        let headers = new Headers();
+        headers.append("Content-type", "application/json");
+        let reqOption = {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({foto:route.params.foto, id:route.params.id, titulo:route.params.titulo, anio:route.params.anio})
+        }
+        let urlApi = URL_ADD_MOVIE + dataUsuario.usuario._id;
+        try{
+            await fetch(urlApi, reqOption).then(response => response.json());
+         }catch(e){
+             alert("Error")
+         } 
+    }
+
+    async function removeMovie(){
+        let reqOption = {
+            method: "PUT",
+        }
+        let urlApi = URL_REMOVE_MOVIE + dataUsuario.usuario._id + "/" + route.params.id;
+        try{
+            await fetch(urlApi, reqOption).then(response => response.json());
+         }catch(e){
+             alert("Error")
+         }  
+    }
+
     function showData(value) {
         if (value === "Reviews") {
             if (reviews.length == 0) { 
@@ -34,14 +67,35 @@ export default function MovieProfile({route}) {
             }
 
         } if (value === "Tu Reseña") {
-            return <Text style={{ fontSize: 15, color: '#E2EAE9' }}>Hace tu review!!</Text>
+            return <AddReview/>
 
+        }
+    }
+
+    function alreadyInList() {
+        const yaAgregada = dataUsuario.usuario.titulos.find(movie => movie.id == route.params.id);
+
+        if (yaAgregada) {
+            setBoton("-");
+        } else {
+            setBoton("+");
         }
     }
 
     useEffect(() => {
         buscarReviewsPelicula();
+        alreadyInList();
     }, []);
+
+    function changeAddButtom() {
+        if (addBoton == "+") {
+            addMovie();
+            setBoton("-");
+        } else {
+            removeMovie();
+            setBoton("+");
+        }
+    }
 
     const PreviewLayout = ({
         values,
@@ -74,6 +128,35 @@ export default function MovieProfile({route}) {
         </View>
     );
 
+    const PreviewLayoutBoton = ({
+        value,
+        selectedValue,
+        setSelectedValue,
+    
+    }) => (
+        <View style={{ padding: 10, flex: 1 }}>
+            <View>
+                <TouchableOpacity
+                    key={value}
+                    onPress={() => { setSelectedValue() }}
+                    style={[
+                        styles.button,
+                        selectedValue === value && styles.selected,
+                    ]}
+                >
+                    <Text
+                        style={[
+                            {fontSize: 50},
+                            selectedValue === value && styles.selectedLabel,
+                        ]}
+                    >
+                        {value}
+                    </Text>
+                </TouchableOpacity>
+    
+            </View>
+        </View>
+    )
     return (
         <View style={{ backgroundColor: '#4A5156' }}>
             <View style={styles.item}>
@@ -84,6 +167,11 @@ export default function MovieProfile({route}) {
                     :
                     <Image style={styles.logo} source={{ uri: noImage }}></Image>
             }
+            <PreviewLayoutBoton
+                        value={addBoton}
+                        selectedValue={addBoton}
+                        setSelectedValue={changeAddButtom}
+                    />
             </View>
             <PreviewLayout
                 values={["Reviews", "Tu Reseña"]}
@@ -154,5 +242,13 @@ const styles = StyleSheet.create({
         padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
+    },
+    button: {
+        width: 60,
+        height: 60,
+        borderRadius: 100,
+        alignSelf: 'flex-start',
+        justifyContent: 'center',
+        textAlign: "center",
     },
 });

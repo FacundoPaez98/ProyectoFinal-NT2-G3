@@ -71,6 +71,8 @@ function UserProfile({route}) {
         isFollowing();
     }, []);
 
+
+
     function changeFollowButtom() {
         if (follow == "Seguir") {
             followUser();
