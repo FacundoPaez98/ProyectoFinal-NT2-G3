@@ -16,6 +16,7 @@ export default function MovieProfile({route}) {
     const [reviews, setReviews] = useState([]);
     const { dataUsuario } = useContext(GlobalContext);
     const [addBoton, setBoton] = useState("+");
+    const [reviewUsuario, setReviewUsuario] = useState({_id:"", texto:"", puntaje:1});
  
     async function buscarReviewsPelicula() {
         let reqOption = {
@@ -25,6 +26,10 @@ export default function MovieProfile({route}) {
         try {
             let data = await fetch(urlApi, reqOption).then(response => response.json());
             setReviews(data)
+            let revUser = data.find(review => review.usuarioId == dataUsuario.usuario._id);
+            if(revUser != undefined){
+                setReviewUsuario({_id: revUser._id, texto: revUser.texto, puntaje: revUser.puntaje});
+            }
         } catch (e) {
             alert("Error")
         }
@@ -67,7 +72,7 @@ export default function MovieProfile({route}) {
             }
 
         } if (value === "Tu Reseña") {
-            return <AddReview/>
+            return <AddReview tituloId={route.params.id} review={reviewUsuario}/>
 
         }
     }
@@ -197,7 +202,7 @@ const styles = StyleSheet.create({
     dataView: {
         justifyContent: "center",
         alignItems: 'center',
-        flexGrow: 0,
+        flexGrow: 0.2,
         marginTop: '18%',
         marginBottom: '125%'
     },

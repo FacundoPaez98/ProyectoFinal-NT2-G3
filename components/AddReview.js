@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, View, StyleSheet, Button, TextInput } from 'react-native';
+import GlobalContext from "./global/context";
 
-function AddReview() {
-    const [point, setPoint] = useState(1)
-    const [textInputValue, onChangeText] = useState("");
+const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews";
+
+function AddReview(props) {
+    const [point, setPoint] = useState(props.review.puntaje)
+    const [textInputValue, onChangeText] = useState(props.review.texto);
+    const { dataUsuario } = useContext(GlobalContext);
 
     function minusPoint() {
         if (point > 1) {
@@ -16,12 +20,59 @@ function AddReview() {
         }
     }
     function putReview() {
+        if(textInputValue == ""){
+            removeReview();
+        }
+        else{
+            updateReview();
+        }
+    }
 
-        console.log("aca llamamos a la Api y metemos la reseña ", textInputValue, " y la puntuacion ", point)
+    async function addReview() {
+        let headers = new Headers();
+        headers.append("Content-type", "application/json");
+        let reqOption = {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({ usuarioId: dataUsuario.usuario._id, tituloId: props.tituloId, texto: textInputValue, puntaje: point })
+        }
+        try {
+            await fetch(URL, reqOption).then(response => response.json());
+        } catch (e) {
+            alert("Error")
+        }
+    }
 
+    async function updateReview() {
+        let headers = new Headers();
+        headers.append("Content-type", "application/json");
+        let reqOption = {
+            method: "PUT",
+            headers: headers,
+            body: JSON.stringify({ texto: textInputValue, puntaje: point })
+        }
+        let urlApi = URL + "/" + props.review._id;
+        try {
+            await fetch(urlApi, reqOption).then(response => response.json());
+        } catch (e) {
+            alert("Error")
+        }
+    }
+
+    async function removeReview() {
+        let reqOption = {
+            method: "DELETE",
+        }
+        let urlApi = URL + "/" + props.review._id;
+        try {
+            await fetch(urlApi, reqOption).then(response => response.json());
+        } catch (e) {
+            console.log("Error");
+        }
     }
 
     return (
+
         <View style={{ alignItems: 'center', bottom: "20%" }}>
             <Text style={{ textAlign: 'center' }}>Puntuación</Text>
             <View style={{ flexDirection: 'row' }}>
@@ -39,20 +90,30 @@ function AddReview() {
                     onPress={plusPoint}
                 />
             </View>
+
             <TextInput
                 style={styles.input}
+                multiline="true"
+                textAlignVertical="top"
                 onChangeText={text => onChangeText(text)}
                 value={textInputValue}
                 placeholder="Escribi tu reseña!"
+                placeholderTextColor='#E2EAE9'
             />
-
-            <Button
-                style={{ backgroundColor: "#ADD8E6" }}
-                title="Agregar"
-                onPress={putReview}
-            />
-
-
+            {
+                (props.review._id == "") ?
+                    <Button
+                        style={{ backgroundColor: "#ADD8E6" }}
+                        title="Agregar"
+                        onPress={addReview}
+                    />
+                    :
+                    <Button
+                        style={{ backgroundColor: "#ADD8E6" }}
+                        title="Editar"
+                        onPress={putReview}
+                    />
+            }
         </View>
 
     )
@@ -62,6 +123,7 @@ const styles = StyleSheet.create({
         height: 100,
         margin: 12,
         borderWidth: 2,
+        color: '#E2EAE9'
     },
     title: {
         fontSize: 15,
