@@ -52,7 +52,7 @@ function Login({applyAuthentication}) {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#4A5156' }}>
             {
                 (showForm) ?
-                    <SignUp volverDeRegistro={volverDeRegistro} applyAuthentication={applyAuthentication}/>
+                    <SignUp volverDeRegistro={volverDeRegistro}/>
                     :
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={styles.text1}>Correo Electrónico</Text>
