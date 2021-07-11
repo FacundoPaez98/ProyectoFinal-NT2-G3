@@ -73,7 +73,7 @@ function AddReview(props) {
 
     return (
 
-        <View style={{ alignItems: 'center', bottom: "20%" }}>
+        <View style={{ alignItems: 'center', bottom: "20%", top:"3%" }}>
             <Text style={{ textAlign: 'center' }}>Puntuación</Text>
             <View style={{ flexDirection: 'row' }}>
                 <Button
@@ -120,13 +120,27 @@ function AddReview(props) {
 }
 const styles = StyleSheet.create({
     input: {
-        height: 100,
+        height: 50,
+        width: "80%",
         margin: 12,
         borderWidth: 2,
         color: '#E2EAE9'
+    },    item: {
+        alignItems: "center",
+        flex: 1,
+        flexDirection: "column",
+        backgroundColor: '#676C6F',
+        padding: 10,
+        marginVertical: 8,
+        marginHorizontal: 16,
     },
     title: {
         fontSize: 15,
+        color: '#E2EAE9',
+    },
+    titlePoint: {
+        alignItems: 'center',
+        fontSize: 19,
         color: '#E2EAE9',
     },
 });

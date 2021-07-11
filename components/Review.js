@@ -3,8 +3,9 @@ import { Text, View, ScrollView, StyleSheet } from 'react-native';
 
 function Review(props) {
 
-    const Item = ({ texto }) => (
+    const Item = ({ texto, puntuacion }) => (
         <View style={styles.item}>
+            <Text style={styles.titlePoint}>Puntaje: {puntuacion}</Text>
             <Text style={styles.title}>{texto}</Text>
         </View>
     );
@@ -14,7 +15,7 @@ function Review(props) {
             {
                 props.data.map(function (item) {
                     return (
-                        <Item key={item._id} texto={item.texto} />
+                        <Item key={item._id} texto={item.texto} puntuacion={item.puntaje}/>
                     )
                 })
             }
@@ -33,6 +34,11 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 15,
+        color: '#E2EAE9',
+    },
+    titlePoint: {
+        alignItems: 'center',
+        fontSize: 19,
         color: '#E2EAE9',
     },
 });
