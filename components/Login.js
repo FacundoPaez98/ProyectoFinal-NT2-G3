@@ -3,7 +3,7 @@ import { Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import SignUp from './SignUp';
 import GlobalContext from './global/context';
 
-function Login() {
+function Login({applyAuthentication}) {
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
     const [showForm, setFlag] = useState(false)
@@ -14,7 +14,6 @@ function Login() {
     }
     
     async function loginUser() {
-        // Authorization: bearer access_token
 
         let headers = new Headers();
         headers.append("Content-type", "application/json");
@@ -25,10 +24,13 @@ function Login() {
         }
         try{
            const data = await fetch("https://obscure-thicket-15756.herokuapp.com/usuario/login", reqOption).then(response => response.json());
-           changeContext(data); 
-           setAuthenticated(true)
+            changeContext(data); 
+            setAuthenticated(true);
+            applyAuthentication(data);
+        
+          
         }catch(e){
-            console.log("fail")
+            console.log("Error Login")
         }
     }
 
@@ -44,11 +46,13 @@ function Login() {
         dataUsuario.usuario.titulos = data.usuario.titulos;
     }
 
+
+
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#4A5156' }}>
             {
                 (showForm) ?
-                    <SignUp volverDeRegistro={volverDeRegistro}/>
+                    <SignUp volverDeRegistro={volverDeRegistro} applyAuthentication={applyAuthentication}/>
                     :
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={styles.text1}>Correo Electrónico</Text>

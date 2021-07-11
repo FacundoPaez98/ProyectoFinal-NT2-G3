@@ -2,34 +2,40 @@ import React, { useContext, useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import GlobalContext from './global/context';
 
-function SignUp({ volverDeRegistro }) {
+function SignUp({ volverDeRegistro, applyAuthentication }) {
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
-    const {dataUsuario, setAuthenticated} = useContext(GlobalContext);
+    const { dataUsuario, setAuthenticated } = useContext(GlobalContext);
 
-    async function registrarUsuario(){
+    async function registrarUsuario() {
         let headers = new Headers();
         headers.append("Content-type", "application/json");
         let reqOption = {
             method: "POST",
             headers: headers,
-            body: JSON.stringify({nombre, apellido, email:mail, username, password})
+            body: JSON.stringify({ nombre, apellido, email: mail, username, password })
         }
 
-        try{
+        try {
             const data = await fetch("https://obscure-thicket-15756.herokuapp.com/usuario/signup", reqOption).then(response => response.json());
+
+            
             changeContext(data);
-            console.log(data); 
+            applyAuthentication(dataUsuario.JSON.stringify());
             setAuthenticated(true)
-         }catch(e){
-             console.log("mail o usuario ya en uso");
-         }
+
+
+            console.log(data);
+
+        } catch (e) {
+            console.log("mail o usuario ya en uso");
+        }
     }
 
-    function changeContext(data){
+    function changeContext(data) {
         dataUsuario.token = data.token;
         dataUsuario.usuario._id = data.usuario._id;
         dataUsuario.usuario.nombre = data.usuario.nombre;
