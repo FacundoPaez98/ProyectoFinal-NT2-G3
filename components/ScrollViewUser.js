@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import { View, ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import * as RootNavigation from '../utils/RootNavigation';
 
 const Item = ({ username }) => (
@@ -8,7 +8,7 @@ const Item = ({ username }) => (
     </View>
 );
 
-function ScrollViewUser (props) {
+function ScrollViewUser(props) {
 
     function navigateUserProfile(usuario) {
         RootNavigation.navigate("PerfilUsuario", usuario);
@@ -21,12 +21,13 @@ function ScrollViewUser (props) {
                     return (
                         <TouchableOpacity onPress={() => navigateUserProfile(item)} key={item._id}>
                             <Item username={item.username} />
-                        </TouchableOpacity>  
+                        </TouchableOpacity>
                     )
                 })
             }
         </ScrollView>
-)} 
+    )
+}
 
 const styles = StyleSheet.create({
 
