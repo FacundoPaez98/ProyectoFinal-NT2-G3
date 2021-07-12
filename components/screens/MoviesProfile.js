@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import Review from "../Review";
 import GlobalContext from '../global/context';
 import AddReview from "../AddReview";
+import AsyncStorage from "../../utils/AsyncStorage";
 
 const URL_REVIEWS = "https://obscure-thicket-15756.herokuapp.com/api/reviews/title-reviews/"
 const URL_ADD_MOVIE = "https://obscure-thicket-15756.herokuapp.com/usuario/add-pelicula/";
@@ -45,7 +46,9 @@ export default function MovieProfile({ route }) {
         }
         let urlApi = URL_ADD_MOVIE + dataUsuario.usuario._id;
         try {
-            await fetch(urlApi, reqOption).then(response => response.json());
+            let data = await fetch(urlApi, reqOption).then(response => response.json());
+            changeContext(data);
+            await AsyncStorage.updateTitulos('@userData', data.titulos);
         } catch (e) {
             alert("Error")
         }
@@ -57,10 +60,16 @@ export default function MovieProfile({ route }) {
         }
         let urlApi = URL_REMOVE_MOVIE + dataUsuario.usuario._id + "/" + route.params.id;
         try {
-            await fetch(urlApi, reqOption).then(response => response.json());
+            let data = await fetch(urlApi, reqOption).then(response => response.json());
+            changeContext(data);
+            await AsyncStorage.updateTitulos('@userData', data.titulos);
         } catch (e) {
             alert("Error")
         }
+    }
+
+    function changeContext(data){
+        dataUsuario.usuario.titulos = data.titulos;
     }
 
     function showData(value) {

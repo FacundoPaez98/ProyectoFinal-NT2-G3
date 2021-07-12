@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import GlobalContext from './global/context';
+import AsyncStorage from '../utils/AsyncStorage';
 
-function SignUp({ volverDeRegistro, applyAuthentication }) {
+function SignUp({ volverDeRegistro }) {
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [mail, setMail] = useState('');
@@ -21,17 +22,23 @@ function SignUp({ volverDeRegistro, applyAuthentication }) {
 
         try {
             const data = await fetch("https://obscure-thicket-15756.herokuapp.com/usuario/signup", reqOption).then(response => response.json());
-
-            
-            changeContext(data);
-            applyAuthentication(dataUsuario.JSON.stringify());
-            setAuthenticated(true)
-
-
-            console.log(data);
-
+            applyAuthentication(data);
         } catch (e) {
             console.log("mail o usuario ya en uso");
+        }
+    }
+
+    const applyAuthentication = (user) => {
+        // TODO: Falta la validacion con el Backend (Ref OpenID protocol)
+        AsyncStorage.storeData('@userData', user)
+        checkUser()
+    }
+
+    const checkUser = async () => {
+        const user = await AsyncStorage.getData('@userData')
+        if (user) {
+          changeContext(user);
+          setAuthenticated(true)
         }
     }
 

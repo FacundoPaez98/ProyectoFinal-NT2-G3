@@ -93,7 +93,7 @@ function AddReview(props) {
 
             <TextInput
                 style={styles.input}
-                multiline="true"
+                multiline={true}
                 textAlignVertical="top"
                 onChangeText={text => onChangeText(text)}
                 value={textInputValue}
