@@ -4,6 +4,7 @@ import InfoProfile from '../InfoProfile';
 import ScrollViewMovies from '../ScrollViewMovies';
 import GlobalContext from '../global/context';
 import Review from "../Review";
+import { useIsFocused } from "@react-navigation/native";
 
 const URL = "https://obscure-thicket-15756.herokuapp.com/api/reviews/user-reviews/";
 
@@ -11,6 +12,7 @@ export default function Profile() {
     const [tabView, setTabView] = useState("Peliculas");
     const [reviews, setReviews] = useState([]);
     const { dataUsuario } = useContext(GlobalContext);
+    const isFocused = useIsFocused();
 
     async function buscarReviewsUsuario() {  
         let reqOption = {
@@ -27,8 +29,10 @@ export default function Profile() {
     }
 
     useEffect(() => {
-        buscarReviewsUsuario();
-    }, []);
+        if(isFocused){
+            buscarReviewsUsuario();
+        }
+    }, [isFocused]);
 
     function showData(value) {
         if (value === "Peliculas") {
