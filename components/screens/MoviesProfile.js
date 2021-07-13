@@ -73,15 +73,18 @@ export default function MovieProfile({ route }) {
     }
 
     function showData(value) {
+        
+        
         if (value === "Reviews") {
             if (reviews.length == 0) {
                 return <Text style={{ fontSize: 15, color: '#E2EAE9' }}>No hay reseñas!</Text>
             } else {
+                buscarReviewsPelicula();
                 return <Review data={reviews} />
             }
 
         } if (value === "Tu Reseña") {
-            return <AddReview tituloId={route.params.id} review={reviewUsuario} />
+            return <AddReview tituloId={route.params.id} titulo={route.params.titulo} review={reviewUsuario} />
 
         }
     }

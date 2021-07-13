@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, TextInput } from 'react-native';
 import GlobalContext from "./global/context";
 
@@ -8,6 +8,16 @@ function AddReview(props) {
     const [point, setPoint] = useState(props.review.puntaje)
     const [textInputValue, onChangeText] = useState(props.review.texto);
     const { dataUsuario } = useContext(GlobalContext);
+    const [idReview, setId] =useState(true)
+
+    
+    useEffect(() => {
+        if (props.review._id == "") {
+            setId(false)
+        }
+        
+    }, []);
+
 
     function minusPoint() {
         if (point > 1) {
@@ -34,10 +44,15 @@ function AddReview(props) {
         let reqOption = {
             method: "POST",
             headers: headers,
-            body: JSON.stringify({ usuarioId: dataUsuario.usuario._id, tituloId: props.tituloId, texto: textInputValue, puntaje: point })
+            body: JSON.stringify({ usuarioId: dataUsuario.usuario._id, tituloId: props.tituloId,
+                 texto: textInputValue, puntaje: point ,
+                 username: dataUsuario.usuario.username,
+                titulo: props.titulo})
         }
         try {
             await fetch(URL, reqOption).then(response => response.json());
+            setId(true)
+            alert("¡Listo!")
         } catch (e) {
             alert("Error")
         }
@@ -54,6 +69,7 @@ function AddReview(props) {
         let urlApi = URL + "/" + props.review._id;
         try {
             await fetch(urlApi, reqOption).then(response => response.json());
+            alert("¡Listo!")
         } catch (e) {
             alert("Error")
         }
@@ -66,6 +82,7 @@ function AddReview(props) {
         let urlApi = URL + "/" + props.review._id;
         try {
             await fetch(urlApi, reqOption).then(response => response.json());
+            alert("¡Listo!")
         } catch (e) {
             console.log("Error");
         }
@@ -101,7 +118,7 @@ function AddReview(props) {
                 placeholderTextColor='#E2EAE9'
             />
             {
-                (props.review._id == "") ?
+                (!idReview) ?
                     <Button
                         style={{ backgroundColor: "#ADD8E6" }}
                         title="Agregar"

@@ -3,10 +3,15 @@ import { Text, View, ScrollView, StyleSheet } from 'react-native';
 
 function Review(props) {
 
-    const Item = ({ texto, puntuacion }) => (
+    const Item = ({ texto, puntuacion, username, titulo }) => (
         <View style={styles.item}>
-            <Text style={styles.titlePoint}>Puntaje: {puntuacion}</Text>
-            <Text style={styles.title}>{texto}</Text>
+
+            <Text style={styles.title}>{titulo}</Text>
+            <View style={{flexDirection: "row"}}>
+                <Text style={styles.username}>{username}   <Text style={styles.titlePoint}> Puntaje: {puntuacion}</Text></Text>
+            </View>
+            <Text style={styles.texto}>{texto}</Text>
+
         </View>
     );
 
@@ -15,7 +20,8 @@ function Review(props) {
             {
                 props.data.map(function (item) {
                     return (
-                        <Item key={item._id} texto={item.texto} puntuacion={item.puntaje}/>
+                        <Item key={item._id} texto={item.texto} puntuacion={item.puntaje}
+                            titulo={item.titulo} username={item.username} />
                     )
                 })
             }
@@ -32,13 +38,24 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         marginHorizontal: 16,
     },
-    title: {
+    texto: {
         fontSize: 15,
         color: '#E2EAE9',
     },
+    username: {
+        fontSize: 18,
+        lignItems: "left",
+        color: '#E2EAE9',
+        alignItems: "left",
+    },
+    title: {
+        fontSize: 18,
+        color: '#E2EAE9',
+        alignItems: "center",
+    },
     titlePoint: {
-        alignItems: 'center',
-        fontSize: 19,
+        alignItems: 'right',
+        fontSize: 18,
         color: '#E2EAE9',
     },
 });
