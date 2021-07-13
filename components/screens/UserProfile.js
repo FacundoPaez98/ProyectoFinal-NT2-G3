@@ -4,6 +4,7 @@ import ScrollViewMovies from '../ScrollViewMovies';
 import GlobalContext from '../global/context/index';
 import Constants from 'expo-constants';
 import Review from '../Review';
+import AsyncStorage from '../../utils/AsyncStorage';
 
 const URL_REVIEWS = "https://obscure-thicket-15756.herokuapp.com/api/reviews/user-reviews/";
 const URL_FOLLOW = "https://obscure-thicket-15756.herokuapp.com/usuario/follow/";
@@ -42,6 +43,7 @@ function UserProfile({route}) {
         try{
             let data = await fetch(urlApi, reqOption).then(response => response.json());
             updateContext(data);
+            await AsyncStorage.updateSeguidos('@userData', data.seguidos);
             setSeguidores(prev => prev + 1);
          }catch(e){
              alert("Error")
@@ -56,6 +58,7 @@ function UserProfile({route}) {
         try{
             let data = await fetch(urlApi, reqOption).then(response => response.json());
             updateContext(data);
+            await AsyncStorage.updateSeguidos('@userData', data.seguidos);
             setSeguidores(prev => prev - 1);
          }catch(e){
              alert("Error")

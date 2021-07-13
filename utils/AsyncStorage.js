@@ -40,4 +40,17 @@ AsyncStorage.updateTitulos = async (key, value) => {
     }
 }
 
+AsyncStorage.updateSeguidos = async (key, value) => {
+    try {
+        await Storage.getItem(key)
+            .then(data => {
+                data = JSON.parse(data);
+                data.usuario.seguidos = value;
+                Storage.setItem(key, JSON.stringify(data));
+            })
+    } catch (error) {
+        console.log(e);
+    }
+}
+
 export default AsyncStorage
