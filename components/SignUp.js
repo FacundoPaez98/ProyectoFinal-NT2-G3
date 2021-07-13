@@ -24,7 +24,7 @@ function SignUp({ volverDeRegistro }) {
             const data = await fetch("https://obscure-thicket-15756.herokuapp.com/usuario/signup", reqOption).then(response => response.json());
             applyAuthentication(data);
         } catch (e) {
-            console.log("mail o usuario ya en uso");
+            alert("mail o usuario ya en uso");
         }
     }
 
