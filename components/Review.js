@@ -44,9 +44,8 @@ const styles = StyleSheet.create({
     },
     username: {
         fontSize: 18,
-        lignItems: "left",
+        alignItems: "flex-start",
         color: '#E2EAE9',
-        alignItems: "left",
     },
     title: {
         fontSize: 18,
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     titlePoint: {
-        alignItems: 'right',
+        alignItems: "flex-end",
         fontSize: 18,
         color: '#E2EAE9',
     },
